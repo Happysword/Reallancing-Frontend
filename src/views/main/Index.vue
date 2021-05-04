@@ -1,12 +1,12 @@
 <template>
   <v-app>
     <NavigationBar />
-    <v-main class="grey lighten-3">
+    <v-main class="grey lighten-4">
       <v-fade-transition mode="out-in" :appear="true" :duration="200">
         <router-view></router-view>
       </v-fade-transition>
     </v-main>
-    <DashboardCoreFooter class="grey lighten-3" />
+    <DashboardCoreFooter class="grey lighten-4" />
   </v-app>
 </template>
 

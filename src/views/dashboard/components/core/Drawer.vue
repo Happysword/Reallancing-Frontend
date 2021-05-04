@@ -18,8 +18,14 @@
 
     <v-list dense nav>
       <v-list-item>
-        <v-list-item-avatar class="align-self-center" color="white" contain height="80" width="80">
-          <v-img src="@/assets/logo.png" height="50" width="50" />
+        <v-list-item-avatar
+          class="align-self-center"
+          color="white"
+          height="80"
+          width="110"
+          rounded
+        >
+          <v-img src="@/assets/logo.png" height="80" />
         </v-list-item-avatar>
 
         <v-list-item-content>

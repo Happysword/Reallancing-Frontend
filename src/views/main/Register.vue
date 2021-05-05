@@ -13,20 +13,32 @@
           height="40"
           text
           fab
+          @click="stepCount = i + 1"
+          :disabled="stepCount < i + 1"
         >
           <v-icon class="mr-3">mdi-heart</v-icon>
           <span>{{ step }}</span>
           <v-spacer></v-spacer>
-          <v-icon>mdi-heart</v-icon>
+          <v-icon v-if="stepCount <= i + 1">mdi-checkbox-marked-circle-outline</v-icon>
+          <v-icon v-else color="green">mdi-check-decagram</v-icon>
         </v-btn>
       </v-col>
 
       <v-col cols="8">
         <v-card color="white" min-height="400" class="center-flex ma-0 pa-6">
           <v-form>
-            <v-row no-gutters justify="center" align="center" class="text-h2 font-weight-bold mb-5">
-              <v-col cols="12" class="text-center">Welcome</v-col>
-            </v-row>
+            <template v-for="(step, i) in steps">
+              <v-row
+                v-show="stepCount == i + 1"
+                no-gutters
+                justify="center"
+                align="center"
+                class="text-h2 font-weight-bold mb-5"
+                :key="i"
+              >
+                <v-col cols="12" class="text-center">{{ step }}</v-col>
+              </v-row>
+            </template>
           </v-form>
         </v-card>
       </v-col>
@@ -52,6 +64,7 @@ export default {
         'Location',
         'Phone',
       ],
+      stepCount: 5,
     };
   },
 };

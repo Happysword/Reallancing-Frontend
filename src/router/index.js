@@ -20,6 +20,10 @@ const routes = [
         path: '/register',
         component: () => import('@/views/main/Register'),
       },
+      {
+        path: '/jobs/:id',
+        component: () => import('@/views/Jobs/ViewJob.vue'),
+      },
     ],
   },
   {

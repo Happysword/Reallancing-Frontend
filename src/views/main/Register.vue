@@ -13,13 +13,14 @@
           height="40"
           text
           fab
-          @click="stepCount = i + 1"
-          :disabled="stepCount < i + 1"
+          @click="currentStep = i + 1"
+          :disabled="maxStep < i + 1"
+          :class="{ 'button-active': i + 1 == currentStep }"
         >
           <v-icon class="mr-3">mdi-heart</v-icon>
           <span>{{ step }}</span>
           <v-spacer></v-spacer>
-          <v-icon v-if="stepCount <= i + 1">mdi-checkbox-marked-circle-outline</v-icon>
+          <v-icon v-if="maxStep <= i + 1">mdi-checkbox-marked-circle-outline</v-icon>
           <v-icon v-else color="green">mdi-check-decagram</v-icon>
         </v-btn>
       </v-col>
@@ -29,7 +30,7 @@
           <v-form>
             <template v-for="(step, i) in steps">
               <v-row
-                v-show="stepCount == i + 1"
+                v-show="currentStep == i + 1"
                 no-gutters
                 justify="center"
                 align="center"
@@ -37,6 +38,9 @@
                 :key="i"
               >
                 <v-col cols="12" class="text-center">{{ step }}</v-col>
+                <v-col cols="12" class="text-center">
+                  <v-btn color="primary" outlined @click="nextStep(i + 1)">Continue</v-btn>
+                </v-col>
               </v-row>
             </template>
           </v-form>
@@ -64,8 +68,15 @@ export default {
         'Location',
         'Phone',
       ],
-      stepCount: 5,
+      currentStep: 1,
+      maxStep: 1,
     };
+  },
+  methods: {
+    nextStep(step) {
+      this.maxStep = Math.max(this.maxStep, step + 1);
+      this.currentStep = step + 1;
+    },
   },
 };
 </script>
@@ -73,5 +84,10 @@ export default {
 <style scoped>
 .button-align {
   justify-content: left;
+}
+.button-active {
+  border-left: 5px solid green;
+  background-color: #fff;
+  font-weight: 700;
 }
 </style>

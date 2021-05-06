@@ -1,7 +1,7 @@
 <template>
   <v-app dark>
     <NavigationBar />
-    <v-main class="grey lighten-4">
+    <v-main class="background">
       <v-fade-transition mode="out-in" :appear="true" :duration="200">
         <router-view></router-view>
       </v-fade-transition>

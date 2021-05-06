@@ -9,6 +9,9 @@ const theme = {
   secondary: '#9C27b0',
   accent: '#9C27b0',
   info: '#00CAE3',
+  topbar: '#1D4354',
+  background: '#F1F2F4',
+  secondbackground: '#F9F9F9',
 };
 
 export default new Vuetify({

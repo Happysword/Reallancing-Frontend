@@ -1,9 +1,9 @@
 <template>
   <div>
-    <v-navigation-drawer v-model="drawer" app temporary>
+    <v-navigation-drawer v-model="drawer" app temporary color="topbar">
       <!--  -->
     </v-navigation-drawer>
-    <v-app-bar app color="white" flat height="65">
+    <v-app-bar app color="topbar" flat height="70">
       <v-container class="fill-height pa-0">
         <v-row no-gutters justify="space-between" align="center">
           <v-col
@@ -11,16 +11,17 @@
               'col-auto': $vuetify.breakpoint.mdAndUp,
               'col-4': $vuetify.breakpoint.sm,
               'col-2': $vuetify.breakpoint.xs,
-              'pa-1': $vuetify.breakpoint.smAndDown,
             }"
             v-if="$vuetify.breakpoint.smAndDown"
           >
-            <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+            <v-btn icon @click="drawer = !drawer" text color="topbar"
+              ><v-icon color="white">mdi-menu</v-icon></v-btn
+            >
           </v-col>
           <v-col
             :class="{
               'col-auto': $vuetify.breakpoint.mdAndUp,
-              'col-4': $vuetify.breakpoint.smAndDown,
+              'col-2': $vuetify.breakpoint.smAndDown,
               'pa-1': $vuetify.breakpoint.smAndDown,
             }"
           >
@@ -36,9 +37,9 @@
               text
               tile
               class="text-h5"
-              height="65"
+              height="70"
               width="120"
-              color="grey darken-1"
+              color="white"
               :to="link.to"
             >
               {{ link.title }}
@@ -56,11 +57,10 @@
             <v-responsive max-width="260">
               <v-text-field
                 append-icon="mdi-magnify"
-                dense
                 flat
                 hide-details
+                background-color="white"
                 rounded
-                solo-inverted
               ></v-text-field>
             </v-responsive>
           </v-col>

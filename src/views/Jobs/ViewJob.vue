@@ -78,11 +78,32 @@
             </div>
           </v-card>
         </v-col>
-        <v-col cols="6" md="4">
-          <h1 class="display-3 font-weight-medium ma-5">test2</h1>
+        <v-col cols="6" md="4" class="hidden-sm-and-down">
+          <v-card>
+            <v-container fluid fill-height>
+              <v-row justify="center" align="center">
+                <v-col cols="8">
+                  <v-btn rounded color="primary" class="ma-2" width="100%">Submit a Proposal</v-btn>
+                  <v-btn rounded color="white" class="ma-2" width="100%"
+                    ><v-icon class="mx-2">mdi-heart</v-icon>Save Job</v-btn
+                  >
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card>
         </v-col>
       </v-row>
     </v-container>
+    <v-bottom-navigation grow fixed class="hidden-md-and-up">
+      <v-btn color="primary">
+        <span class="white--text">Submit a Proposal</span>
+        <v-icon class="white--text">mdi-file-document</v-icon>
+      </v-btn>
+      <v-btn color="white">
+        <span>Save Job</span>
+        <v-icon>mdi-heart</v-icon>
+      </v-btn>
+    </v-bottom-navigation>
   </div>
 </template>
 

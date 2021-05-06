@@ -16,22 +16,15 @@
 
     <v-divider class="mb-1" />
 
-    <v-list dense nav>
-      <v-list-item>
-        <v-list-item-avatar
-          class="align-self-center"
-          color="white"
-          height="80"
-          width="110"
-          rounded
-        >
-          <v-img src="@/assets/logo.png" height="80" />
-        </v-list-item-avatar>
-
-        <v-list-item-content>
-          <v-list-item-title class="text-h4 font-weight-bold" v-text="profile.title" />
-        </v-list-item-content>
-      </v-list-item>
+    <v-list dense nav style="list-style:none" class="mt-3 mb-3">
+      <li class="text-center">
+        <v-avatar class="align-self-center" color="white" height="100" width="110">
+          <v-img src="@/assets/Reallancing_Black.png" height="80" />
+        </v-avatar>
+      </li>
+      <li class="text-center text-h3 mt-3">
+        Admin Panel
+      </li>
     </v-list>
 
     <v-divider class="mb-2" />

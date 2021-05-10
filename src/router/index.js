@@ -24,6 +24,10 @@ const routes = [
         path: '/jobs/:id',
         component: () => import('@/views/Jobs/ViewJob.vue'),
       },
+      {
+        path: '/proposals/:id',
+        component: () => import('@/views/Proposals/ViewProposal.vue'),
+      },
     ],
   },
   {

@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-unresolved
 import axios from 'axios';
 
 axios.interceptors.request.use(
@@ -13,6 +14,12 @@ export default {
   async fetchJob(id) {
     return axios
       .get(`http://localhost:3000/api/v1/jobs/${id}`)
+      .then(response => response.data)
+      .catch(() => false);
+  },
+  async fetchProposal(id) {
+    return axios
+      .get(`http://localhost:3000/api/v1/proposals/${id}`)
       .then(response => response.data)
       .catch(() => false);
   },

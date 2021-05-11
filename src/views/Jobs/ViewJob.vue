@@ -77,7 +77,15 @@
             <v-container fluid fill-height>
               <v-row justify="center" align="center">
                 <v-col cols="8">
-                  <v-btn rounded color="primary" class="ma-2" width="100%">Submit a Proposal</v-btn>
+                  <v-btn
+                    rounded
+                    color="primary"
+                    class="ma-2"
+                    width="100%"
+                    route
+                    :to="{ name: 'applyjob', params: { id: $route.params.id } }"
+                    >Submit a Proposal</v-btn
+                  >
                   <v-btn rounded color="white" class="ma-2" width="100%"
                     ><v-icon class="mx-2">mdi-heart</v-icon>Save Job</v-btn
                   >
@@ -89,7 +97,7 @@
       </v-row>
     </v-container>
     <v-bottom-navigation grow fixed class="hidden-md-and-up">
-      <v-btn color="primary">
+      <v-btn color="primary" route :to="{ name: 'applyjob', params: { id: $route.params.id } }">
         <span class="white--text">Submit a Proposal</span>
         <v-icon class="white--text">mdi-file-document</v-icon>
       </v-btn>
@@ -102,7 +110,7 @@
 </template>
 
 <script>
-import api from '../../api/index';
+// import api from '../../api/index';
 
 export default {
   data() {
@@ -115,10 +123,23 @@ export default {
   },
   methods: {
     fetchJob() {
-      api.fetchJob(this.$route.params.id).then(response => {
-        console.log(response.data);
-        this.job = response.data.job;
-      });
+      // api.fetchJob(this.$route.params.id).then(response => {
+      //   console.log(response.data);
+      //   this.job = response.data;
+      // });
+      this.job = {
+        skills: ['Adobe Photoshop', 'Adobe Illustrator', 'Video Editing'],
+        _id: '608ea0d479e5d50a98e11550',
+        headline: 'Graphic Designer for Social Media Facebook Image Ads and Onlineshop graphics',
+        description:
+          'I‘m looking for a graphic designer who has experience with Facebook ads. I work with different clients to optimize their social media ads performance and K need a partner who can create attention strong image ads, is very creative and works fast.',
+        category: 'Graphic Design',
+        experience: 'Entry level',
+        minHourlyRate: 20,
+        maxHourlyRate: 5000,
+        duration: '3 to 6 months',
+        id: '608ea0d479e5d50a98e11550',
+      };
     },
   },
 };

@@ -22,7 +22,13 @@ const routes = [
       },
       {
         path: '/jobs/:id',
+        name: 'viewjob',
         component: () => import('@/views/Jobs/ViewJob.vue'),
+      },
+      {
+        path: '/applyjob/:id',
+        name: 'applyjob',
+        component: () => import('@/views/Jobs/ApplyJob.vue'),
       },
       {
         path: '/proposals/:id',

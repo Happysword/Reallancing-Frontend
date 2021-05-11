@@ -1,15 +1,6 @@
 <template>
   <div>
     <v-container>
-      <v-row
-        class="ma-2 pt-3 display-1 primary--text"
-        color="primary"
-        @click="returnBack"
-        ><a>
-          <v-icon color="primary">mdi-keyboard-backspace</v-icon>
-          <span class="text-decoration-underline">View all Proposals</span>
-        </a>
-      </v-row>
       <v-row>
         <v-col cols="12" md="12" sm="12">
           <v-card color="secondbackground">
@@ -33,21 +24,15 @@
                       <div class="my-2 mx-1">
                         <v-row>
                           <p class="headline">
-                            {{ proposal.user.firstName }}
-                            {{ proposal.user.lastName }}
+                            {{ user.firstName }}
+                            {{ user.lastName }}
                           </p>
                         </v-row>
                         <v-row class="my-0">
                           <v-icon color="primary">mdi-star</v-icon>
                           <div class="body-1 px-1">
-                            {{ proposal.user.rating }}
+                            {{ user.rating }}
                           </div>
-                        </v-row>
-                        <v-row class="px-1 my-1">
-                          <!-- need to replace the route -->
-                          <a :href="`/profile/${proposal.user._id}`"
-                            >View Profile</a
-                          >
                         </v-row>
                       </div>
                     </v-col>
@@ -62,7 +47,7 @@
                     width="100%"
                     id="whitebtn"
                   >
-                    Decline Candidate
+                    Hire
                   </v-btn>
                 </v-col>
                 <v-col cols="12" md="2" sm="12">
@@ -73,7 +58,7 @@
                     width="100%"
                     id="greenbtn"
                   >
-                    Hire Freelancer
+                    Invite
                   </v-btn>
                 </v-col>
               </v-container>
@@ -81,25 +66,29 @@
             <v-divider> </v-divider>
             <v-row class="ma-0">
               <v-col cols="12" md="3" sm="5" class="pa-0">
-                <div class="pa-3">
-                  <strong class="subtitle-1">Applicant</strong>
-                  <br />
-                  <span class="body-1 font-weight-light">
-                    {{ proposal.user.firstName }} has applied to or been invited
-                    to your or your company's job {{ proposal.job.headline }}
-                  </span>
+                <div class="px-3 pt-3">
+                  <strong class="subtitle-1 font-weight-medium"
+                    >View Profile</strong
+                  >
+                  <p class="body-1 pt-1">
+                    <v-icon class="ml-2 mt-n1" color="primary"
+                      >mdi-check-outline</v-icon
+                    >
+                    All Work
+                  </p>
                 </div>
                 <v-divider> </v-divider>
                 <div class="pa-3">
-                  <h3 class="display-2 font-weight-medium">How they match</h3>
-                  <div class="pt-1">
-                    <v-icon color="primary" class="mr-2"
-                      >mdi-check-circle</v-icon
-                    >
-                    <span class="body-1 font-weight-light"
-                      >Worked on jobs like yours</span
-                    >
-                  </div>
+                  <h3 class="display-2 font-weight-medium">Skills</h3>
+                  <v-chip class="ma-1 white--text" color="topbar">
+                    <span class="body-2">Hard Work</span>
+                  </v-chip>
+                  <v-chip class="ma-1 white--text" color="topbar">
+                    <span class="body-2">Presentation Skills</span>
+                  </v-chip>
+                  <v-chip class="ma-1 white--text" color="topbar">
+                    <span class="body-2">Team Work</span>
+                  </v-chip>
                 </div>
                 <!-- <v-divider> </v-divider>
                 <div class="pa-3">
@@ -114,19 +103,31 @@
               <v-col cols="12" md="9" sm="7" class="px-0">
                 <div class="px-5">
                   <v-row class="pt-3 px-3">
-                    <p class="headline pt-1">Proposal Details</p>
-                    <v-spacer></v-spacer>
-                    <p class="display-2 font-weight-medium pr-4">
-                      ${{ proposal.proposedHourlyRate }}/hr
+                    <p class="headline pt-1 font-weight-medium">
+                      Full Stack Developer
                     </p>
+                    <v-spacer></v-spacer>
+                    <p class="display-2 font-weight-medium pr-4">$555/hr</p>
                   </v-row>
-                  <p class="mt-n5 pr-4" align="end">Proposed Hourly Rate</p>
+                  <p class="mt-n5 pr-4" align="end">Hourly Rate</p>
+                  <p class="body-1 px-8 text-justify">
+                    I have more than 6+ years of experience in Web applications.
+                    I specialize in developing high-quality UI/UX interfaces.
+                    I'm highly skilled in developing web apps. I am highly
+                    experienced in HTML, CSS, REACTJS, Redux, Hooks, Javascript,
+                    Bootstrap, also have worked with almost all UI libraries. I
+                    also have expertise in designing and developing websites
+                    from scratch using PSD.
+                  </p>
                 </div>
                 <v-divider class="mx-0"> </v-divider>
                 <div class="pa-3">
-                  <h2 class="display-2 font-weight-bold pa-3">Cover letter</h2>
+                  <h2 class="display-2 font-weight-bold pa-3">Work History</h2>
                   <p class="body-1 px-8 text-justify">
-                    {{ proposal.coverLetter }}
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                    Tempora iusto cum vel ad adipisci eos suscipit!
+                    Exercitationem ullam eum eligendi mollitia vitae soluta
+                    error velit id quis. Ad, eaque autem!
                   </p>
                 </div>
               </v-col>
@@ -139,27 +140,33 @@
 </template>
 
 <script>
-import api from '../../api/index';
+// import api from '../../api/index';
 
 export default {
   data() {
     return {
-      proposal: {},
+      user: {},
     };
   },
   mounted() {
-    this.fetchProposal();
+    this.fetchUser();
   },
   methods: {
-    returnBack() {
-      // this.$router.push(`/proposals/${this.proposal.job.id}`);
-      this.$router.push('/');
-    },
-    fetchProposal() {
-      api.fetchProposal(this.$route.params.id).then((response) => {
-        console.log(response.data);
-        this.proposal = response.data;
-      });
+    fetchUser() {
+      //   api.fetchProposal(this.$route.params.id).then((response) => {
+      //     console.log(response.data);
+      //     this.user = response.data;
+      //   });
+      this.user = {
+        rating: 1.4,
+        _id: '6096b121a88c935060e80262',
+        firstName: 'Ahmaa',
+        lastName: 'Ali',
+        email: 'ali5@gmail.com',
+        type: 'freelancer',
+        __v: 0,
+        id: '6096b121a88c935060e80262',
+      };
     },
   },
 };

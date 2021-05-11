@@ -28,6 +28,10 @@ const routes = [
         path: '/proposals/:id',
         component: () => import('@/views/Proposals/ViewProposal.vue'),
       },
+      {
+        path: '/profiles/:id',
+        component: () => import('@/views/Profiles/ViewProfile.vue'),
+      },
     ],
   },
   {

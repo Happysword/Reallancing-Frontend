@@ -13,11 +13,7 @@
       </v-col>
     </v-row>
     <v-container v-else class="cover">
-      <v-progress-circular
-        :size="300"
-        color="blue darken-3"
-        indeterminate
-      ></v-progress-circular>
+      <v-progress-circular :size="300" color="blue darken-3" indeterminate></v-progress-circular>
     </v-container>
   </div>
 </template>
@@ -25,8 +21,8 @@
 <script>
 export default {
   props: {
-    type: String
-  }
+    type: String,
+  },
 };
 </script>
 

@@ -82,6 +82,8 @@
 </template>
 
 <script>
+import api from '@/api';
+
 export default {
   data() {
     return {
@@ -100,23 +102,42 @@ export default {
     };
   },
   methods: {
-    submitForm() {
+    async submitForm() {
       // Validate Input
       if (!this.$refs.loginform.validate()) return;
 
       // Disable the button
       this.sendRequest = true;
 
-      // send the request
+      // Send the request
+      const loginResponse = await api.loginUser({
+        email: this.email,
+        password: this.password,
+      });
 
+      // If the request was successful,
+      if (loginResponse.status === 200) {
+        // Save the token
+        const { token } = loginResponse.data;
+        const userdata = loginResponse.data.data;
+        localStorage.setItem('userToken', JSON.stringify(token));
+        localStorage.setItem('userData', JSON.stringify(userdata.user));
+
+        // Display success and route to home
+        this.$store.state.snackbarMessage = 'Welcome to Our Website';
+        this.$store.state.snackbar = true;
+        this.$store.state.snackbarColor = 'green accent-4';
+        this.$store.state.currentUser = userdata.user;
+        this.$router.push('/');
+      } else {
+        // Display success and route to home
+        this.$store.state.snackbarMessage = 'Wrong Email or Password';
+        this.$store.state.snackbar = true;
+        this.$store.state.snackbarColor = 'red accent-4';
+      }
       // Renable the button
       this.sendRequest = false;
       this.$refs.loginform.reset();
-
-      // Display success and route to home
-      this.$store.state.snackbarMessage = 'Welcome Back to Our Website';
-      this.$store.state.snackbar = true;
-      this.$router.push('/');
     },
   },
 };

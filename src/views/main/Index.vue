@@ -11,12 +11,14 @@
         absolute
         centered
         top
-        color="deep-purple accent-4"
+        :color="$store.state.snackbarColor"
         elevation="24"
         v-model="$store.state.snackbar"
         :timeout="3000"
       >
-        {{ $store.state.snackbarMessage }}
+        <div class="text-center text-h4">
+          {{ $store.state.snackbarMessage }}
+        </div>
       </v-snackbar>
     </v-main>
     <DashboardCoreFooter class="grey lighten-4" />

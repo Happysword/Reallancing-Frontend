@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="background-color:white">
     <!-- Hero Container -->
     <v-container fluid class="hero-container white--text">
       <v-container class="new-container">
@@ -10,20 +10,20 @@
               :class="{
                 'text-h4': $vuetify.breakpoint.xs,
                 'text-h3': $vuetify.breakpoint.sm,
-                'text-h1': $vuetify.breakpoint.mdAndUp,
+                'text-large': $vuetify.breakpoint.mdAndUp,
               }"
             >
-              Adventure
+              Your New Career Awaits
             </h1>
             <p
               class="mb-10"
               :class="{
                 'text-subtitle-1': $vuetify.breakpoint.xs,
-                'text-h6': $vuetify.breakpoint.sm,
-                'text-h4': $vuetify.breakpoint.mdAndUp,
+                'text-h5': $vuetify.breakpoint.sm,
+                'text-h3': $vuetify.breakpoint.mdAndUp,
               }"
             >
-              What
+              What are you waiting for?
             </p>
             <v-btn
               rounded
@@ -48,7 +48,7 @@
       </v-container>
     </v-container>
 
-    <!--Road to success Section-->
+    <!--Join Now Section-->
     <v-container
       id="success-section"
       class="new-container"
@@ -77,7 +77,7 @@
           }"
         >
           <h2
-            class="mb-10 mt-10 font-weight-light"
+            class="mb-10 mt-10 font-weight-bold"
             :class="{
               'text-h3': $vuetify.breakpoint.smAndDown,
               'text-center': $vuetify.breakpoint.smAndDown,
@@ -85,18 +85,17 @@
               'text-large': $vuetify.breakpoint.lgAndUp,
             }"
           >
-            Course To Success
+            Join the world's work marketplace
           </h2>
           <p
-            class="text-h6 mb-5 mt-5 font-weight-light"
+            class="mb-5 mt-5 font-weight-light"
             :class="{
               'text-subtitle-1': $vuetify.breakpoint.smAndDown,
               'text-center': $vuetify.breakpoint.smAndDown,
-              'text-subtitle-1': $vuetify.breakpoint.md,
-              'text-h6': $vuetify.breakpoint.lgAndUp,
+              'text-h3': $vuetify.breakpoint.mdAndUp,
             }"
           >
-            Success Intro
+            Find great talent. Build your business. Take your career to the next level.
           </p>
           <v-btn
             x-large
@@ -104,7 +103,7 @@
             height="80"
             to="/register"
             color="blue darken-1"
-            class="white--text mb-10 text-h6"
+            class="white--text mb-10 text-h4"
             outlined
             :class="{
               'text-subtitle-1': $vuetify.breakpoint.smAndDown,
@@ -129,69 +128,77 @@
           class="mt-3"
           :class="{
             'mb-5': $vuetify.breakpoint.xs,
-            'mb-14': $vuetify.breakpoint.smAndUp,
           }"
         >
           <v-col
             ><h2
-              class="text-center"
+              class="text-center font-weight-bold"
               :class="{
-                'text-h5': $vuetify.breakpoint.xs,
-                'text-h4': $vuetify.breakpoint.sm,
-                'text-h3': $vuetify.breakpoint.mdAndUp,
+                'text-h3': $vuetify.breakpoint.smAndDown,
+                'text-large': $vuetify.breakpoint.mdAndUp,
               }"
             >
-              Section
+              Find great work
             </h2></v-col
           >
         </v-row>
         <v-row>
           <v-col md="3" sm="6" cols="12">
             <v-card color="rgb(245, 245, 245)" elevation="0" class="text-center pa-5">
-              <v-icon size="60" color="blue lighten-1" class="mb-8">mdi-school-outline</v-icon>
-              <h3 class="mb-3 text-h6 font-weight-medium">
-                Learn
+              <v-icon size="60" color="blue lighten-1" class="mb-8"
+                >mdi-transit-connection-variant</v-icon
+              >
+              <h3 class="mb-3 text-h4 font-weight-light">
+                Meet clients you’re excited to work with and take your career or business to new
+                heights.
               </h3>
-              <p class="text-h6 font-weight-light">
-                Skills
-              </p>
+            </v-card>
+          </v-col>
+
+          <v-col md="3" sm="6" cols="12">
+            <v-card color="rgb(245, 245, 245)" elevation="0" class="text-center pa-5">
+              <v-icon size="60" color="blue lighten-1" class="mb-8">mdi-yeast</v-icon>
+              <h3 class="mb-3 text-h4 font-weight-light">
+                Find opportunities for every stage of your freelance career
+              </h3>
+            </v-card>
+          </v-col>
+
+          <v-col md="3" sm="6" cols="12">
+            <v-card color="rgb(245, 245, 245)" elevation="0" class="text-center pa-5">
+              <v-icon size="60" color="blue lighten-1" class="mb-8">mdi-timetable</v-icon>
+              <h3 class="mb-3 text-h4 font-weight-light">
+                Control when, where, and how you work
+              </h3>
             </v-card>
           </v-col>
 
           <v-col md="3" sm="6" cols="12">
             <v-card color="rgb(245, 245, 245)" elevation="0" class="text-center pa-5">
               <v-icon size="60" color="blue lighten-1" class="mb-8">mdi-teach</v-icon>
-              <h3 class="mb-3 text-h6 font-weight-medium">
-                Study Career
+              <h3 class="mb-3 text-h4 font-weight-light">
+                Explore different ways to earn
               </h3>
-              <p class="text-h6 font-weight-light">
-                Body
-              </p>
             </v-card>
           </v-col>
-
-          <v-col md="3" sm="6" cols="12">
-            <v-card color="rgb(245, 245, 245)" elevation="0" class="text-center pa-5">
-              <v-icon size="60" color="blue lighten-1" class="mb-8">mdi-certificate-outline</v-icon>
-              <h3 class="mb-3 text-h6 font-weight-medium">
-                Earn Cert
-              </h3>
-              <p class="text-h6 font-weight-light">
-                Body cert
-              </p>
-            </v-card>
-          </v-col>
-
-          <v-col md="3" sm="6" cols="12">
-            <v-card color="rgb(245, 245, 245)" elevation="0" class="text-center pa-5">
-              <v-icon size="60" color="blue lighten-1" class="mb-8">mdi-account-group</v-icon>
-              <h3 class="mb-3 text-h6 font-weight-medium">
-                Benefit Scoiety
-              </h3>
-              <p class="text-h6 font-weight-light">
-                benefitSocietyBody
-              </p>
-            </v-card>
+        </v-row>
+        <v-row justify="center">
+          <v-col cols="auto">
+            <v-btn
+              x-large
+              width="200"
+              height="80"
+              to="/register"
+              color="blue darken-1"
+              class="white--text text-h4"
+              outlined
+              :class="{
+                'text-subtitle-1': $vuetify.breakpoint.smAndDown,
+                'text-center': $vuetify.breakpoint.smAndDown,
+              }"
+            >
+              Find Work Now
+            </v-btn>
           </v-col>
         </v-row>
       </v-container>
@@ -208,7 +215,7 @@
       }"
     >
       <v-row
-        class="mt-10 mb-10 accessible-section"
+        class="mt-3 mb-3 accessible-section"
         :class="{
           'mb-1': $vuetify.breakpoint.smAndDown,
           'mt-1': $vuetify.breakpoint.smAndDown,
@@ -228,20 +235,20 @@
           >
             <div id="circle-one-outer">
               <div id="circle-one-inner" class="center-horizontal text-center">
-                <div class="text-h4">3000+</div>
-                <div class="text-h6">ُExamples</div>
+                <div class="text-h2">10000+</div>
+                <div class="text-h4">ُJobs Done</div>
               </div>
             </div>
             <div id="circle-two-outer">
               <div id="circle-two-inner" class="center-horizontal text-center">
-                <div class="text-h4">20+</div>
-                <div class="text-h6">ُExamples</div>
+                <div class="text-h2">70+</div>
+                <div class="text-h4">ُSkills</div>
               </div>
             </div>
             <div id="circle-three-outer">
               <div id="circle-three-inner" class="center-horizontal text-center">
-                <div class="text-h4">13+</div>
-                <div class="text-h6">ُExamples</div>
+                <div class="text-h2">50+</div>
+                <div class="text-h4">Categories</div>
               </div>
             </div>
           </v-row>
@@ -257,26 +264,23 @@
           }"
         >
           <h2
-            class="mb-10 mt-10 font-weight-light"
+            class="mb-10 mt-10 font-weight-bold"
             :class="{
               'text-h3': $vuetify.breakpoint.smAndDown,
               'text-center': $vuetify.breakpoint.smAndDown,
-              'text-h2': $vuetify.breakpoint.md,
-              'text-large': $vuetify.breakpoint.lgAndUp,
+              'text-large': $vuetify.breakpoint.mdAndUp,
             }"
           >
-            Accessible
+            Hire a pro
           </h2>
           <p
-            class="text-h6 mb-5 mt-5 font-weight-light"
+            class="text-h3 mb-5 mt-5 font-weight-light"
             :class="{
-              'text-subtitle-1': $vuetify.breakpoint.smAndDown,
+              'text-h4': $vuetify.breakpoint.smAndDown,
               'text-center': $vuetify.breakpoint.smAndDown,
-              'text-subtitle-1': $vuetify.breakpoint.md,
-              'text-h6': $vuetify.breakpoint.lgAndUp,
             }"
           >
-            Acessible
+            For any kind of Job or Skill, you will find the perfect match through our talents.
           </p>
         </v-col>
       </v-row>
@@ -286,26 +290,82 @@
       <Loading type="content" v-if="0"></Loading>
       <v-container v-else fill-height class="courses-section new-container">
         <v-row
-          no-gutters
-          justify="center"
-          class="mb-10"
+          class="mt-10 mb-10"
           :class="{
+            'mb-1': $vuetify.breakpoint.smAndDown,
             'mt-1': $vuetify.breakpoint.smAndDown,
-            'mt-10': $vuetify.breakpoint.mdAndUp,
           }"
         >
-          <v-col cols="12">
+          <v-col
+            md="6"
+            sm="12"
+            :class="{
+              'center-horizontal': $vuetify.breakpoint.smAndDown,
+              'pr-3': $vuetify.breakpoint.smAndDown,
+              'pr-16': $vuetify.breakpoint.mdAndUp,
+            }"
+          >
             <h2
-              class="font-weight-light"
+              class="mb-10 mt-10 font-weight-bold"
               :class="{
-                'text-h5': $vuetify.breakpoint.xs,
+                'text-h3': $vuetify.breakpoint.smAndDown,
                 'text-center': $vuetify.breakpoint.smAndDown,
-                'text-h4': $vuetify.breakpoint.sm,
+                'text-h2': $vuetify.breakpoint.md,
+                'text-large': $vuetify.breakpoint.lgAndUp,
+              }"
+            >
+              Top Skills
+            </h2>
+            <p
+              class="mb-5 mt-5 font-weight-light"
+              :class="{
+                'text-subtitle-1': $vuetify.breakpoint.smAndDown,
+                'text-center': $vuetify.breakpoint.smAndDown,
                 'text-h3': $vuetify.breakpoint.mdAndUp,
               }"
             >
-              Hello
-            </h2>
+              The best of what we offer in our diverse set of skills
+            </p>
+            <v-btn
+              x-large
+              width="200"
+              height="80"
+              to="/register"
+              color="blue darken-1"
+              class="white--text mb-10 text-h4"
+              outlined
+              :class="{
+                'text-subtitle-1': $vuetify.breakpoint.smAndDown,
+                'text-center': $vuetify.breakpoint.smAndDown,
+              }"
+            >
+              Become one of us
+            </v-btn>
+          </v-col>
+          <v-col
+            :class="{
+              'col-6': $vuetify.breakpoint.mdAndUp,
+              'col-12': $vuetify.breakpoint.smAndDown,
+            }"
+          >
+            <v-row
+              class="text-center bluegrey--text"
+              :class="{
+                'text-h5': $vuetify.breakpoint.smAndDown,
+                'text-h3': $vuetify.breakpoint.mdAndUp,
+              }"
+            >
+              <v-col
+                :class="{
+                  'col-6': $vuetify.breakpoint.mdAndUp,
+                  'col-12': $vuetify.breakpoint.smAndDown,
+                }"
+                v-for="(item, i) in skills"
+                :key="i"
+              >
+                {{ item }}
+              </v-col>
+            </v-row>
           </v-col>
         </v-row>
       </v-container>
@@ -324,7 +384,7 @@ export default {
       const bodyRect = document.body.getBoundingClientRect().top;
       let element = document.getElementById(el);
       if (element == null) element = document.getElementById(secondaryel);
-      const headerOffset = 80;
+      const headerOffset = 70;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition - bodyRect - headerOffset;
 
@@ -335,7 +395,42 @@ export default {
     },
   },
   computed: {},
-  data: () => ({}),
+  data: () => ({
+    skills: [
+      'Data Entry Specialists',
+      'Video Editors',
+      'Data Analyst',
+      'Shopify Developer',
+      'Ruby on Rails Developer',
+      'Android Developer',
+      'Bookkeeper',
+      'Content Writer',
+      'Copywriter',
+      'Database Administrator',
+      'Data Scientist',
+      'Front-End Developer',
+      'Game Developer',
+      'Graphic Designer',
+      'iOS Developer',
+      'Java Developer',
+      'JavaScript Developer',
+      'Logo Designer',
+      'Mobile App Developer',
+      'PHP Developer',
+      'Python Developer',
+      'Resume Writer',
+      'SEO Expert',
+      'Social Media Manager',
+      'Software Developer',
+      'Software Engineer',
+      'Technical Writer',
+      'UI Designer',
+      'UX Designer',
+      'Virtual Assistant',
+      'Web Designer',
+      'Wordpress Developer',
+    ],
+  }),
   created() {},
 };
 </script>
@@ -354,7 +449,7 @@ export default {
 }
 .hero-container {
   background: url(../../assets/img-home.jpg) center center/cover no-repeat;
-  height: calc(100vh - 80px);
+  height: calc(100vh - 70px);
   width: 100%;
   box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.3);
   object-fit: contain;

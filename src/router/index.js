@@ -37,6 +37,11 @@ const routes = [
         component: () => import('@/views/Freelancer/FreelancerFeed.vue'),
       },
       {
+        path: '/myproposals',
+        name: 'myproposals',
+        component: () => import('@/views/Freelancer/MyProposals.vue'),
+      },
+      {
         path: '/proposals/:id',
         component: () => import('@/views/Proposals/ViewProposal.vue'),
       },

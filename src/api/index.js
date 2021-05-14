@@ -46,6 +46,19 @@ export default {
       .then(response => response.data)
       .catch(() => false);
   },
+  async createAProposal(propsalText, jobID) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem('userToken'))}`,
+      },
+    };
+    return axios
+      .post(`http://localhost:3000/api/v1/jobs/${jobID}/proposals`, {
+        coverLetter: propsalText,
+      }, config)
+      .then(response => response.data)
+      .catch(() => false);
+  },
   async fetchProposal(id) {
     const config = {
       headers: {

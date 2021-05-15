@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row class="ma-2 pt-3 display-1">
-      <h1 class="display-3 font-weight-medium">My Proposals</h1>
+      <h1 class="display-3 font-weight-medium">Submitted Proposals</h1>
     </v-row>
     <v-row>
       <v-col cols="12" md="12" sm="12" v-if="proposals.length">
@@ -30,11 +30,11 @@ export default {
   },
   components: { ProposalCard },
   mounted() {
-    this.fetchCurrentFreelancerProposals();
+    this.fetchJobProposals();
   },
   methods: {
-    fetchCurrentFreelancerProposals() {
-      api.fetchCurrentFreelancerProposals(this.$route.params.id).then(response => {
+    fetchJobProposals() {
+      api.fetchJobProposals(this.$route.params.id).then(response => {
         this.proposals = response.data;
       });
     },

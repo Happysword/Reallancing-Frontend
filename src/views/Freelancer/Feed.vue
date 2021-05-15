@@ -3,10 +3,26 @@
     <v-container>
       <v-row>
         <v-col cols="4">
-          <h1 class="display-3 font-weight-medium my-3 hidden-sm-and-down">Find Work</h1>
-          <h1 class="display-2 font-weight-medium my-5 hidden-md-and-up">Find Work</h1>
+          <h1
+            class="display-3 font-weight-medium my-3 hidden-sm-and-down"
+            v-if="type == 'freelancer'"
+          >
+            Find Work
+          </h1>
+          <h1
+            class="display-2 font-weight-medium my-5 hidden-md-and-up"
+            v-if="type == 'freelancer'"
+          >
+            Find Work
+          </h1>
+          <h1 class="display-3 font-weight-medium my-3 hidden-sm-and-down" v-if="type == 'client'">
+            My Jobs
+          </h1>
+          <h1 class="display-2 font-weight-medium my-5 hidden-md-and-up" v-if="type == 'client'">
+            My Jobs
+          </h1>
         </v-col>
-        <v-col cols="8" class="my-0">
+        <v-col cols="8">
           <v-text-field
             v-model="searchText"
             class="my-5"
@@ -19,6 +35,20 @@
             background-color="white"
           ></v-text-field>
         </v-col>
+      </v-row>
+      <v-row align="center" justify="center">
+        <v-btn
+          color="primary"
+          class="ma-3 white--text"
+          @click="loader = 'loading3'"
+          to="/createjob"
+          v-if="type == 'client'"
+        >
+          Create A New Job
+          <v-icon right dark>
+            mdi-plus-box
+          </v-icon>
+        </v-btn>
       </v-row>
       <div v-if="jobs.length">
         <job-card
@@ -53,6 +83,7 @@ export default {
       searchText: '',
       jobs: {},
       page: 1,
+      type: '',
     };
   },
   components: { JobCard },
@@ -69,12 +100,21 @@ export default {
     },
   },
   mounted() {
-    this.fetchAllJobs();
+    this.type = JSON.parse(localStorage.getItem('userData')).type;
+    if (this.type === 'freelancer') {
+      this.fetchAllJobs();
+    } else {
+      this.fetchCurrentUserJobs();
+    }
   },
   methods: {
     fetchAllJobs(page) {
       api.fetchAllJobs(page).then(response => {
-        console.log(response.data);
+        this.jobs = response.data;
+      });
+    },
+    fetchCurrentUserJobs() {
+      api.fetchCurrentUserJobs().then(response => {
         this.jobs = response.data;
       });
     },

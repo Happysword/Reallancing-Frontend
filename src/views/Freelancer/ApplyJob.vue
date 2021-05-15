@@ -59,6 +59,9 @@ export default {
       api.createAProposal(this.coverletter, this.$route.params.id).then(res => {
         if (res) {
           this.$router.push({ name: 'myproposals' });
+          this.$store.state.snackbarMessage = 'Proposal Submitted';
+          this.$store.state.snackbar = true;
+          this.$store.state.snackbarColor = 'primary';
         }
       });
     },

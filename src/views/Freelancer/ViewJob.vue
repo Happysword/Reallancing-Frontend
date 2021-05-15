@@ -27,7 +27,7 @@
                         <v-icon>mdi-timer</v-icon>
                       </v-col>
                       <v-col cols="8" class="font-weight-bold">
-                        {{ job.minHourlyRate }}LE-{{ job.maxHourlyRate }}LE
+                        {{ job.minHourlyRate }}$-{{ job.maxHourlyRate }}$
                         <v-card-subtitle class="ma-0 pa-0 caption">Hourly</v-card-subtitle>
                       </v-col>
                     </v-row>
@@ -74,7 +74,7 @@
         </v-col>
         <v-col cols="6" md="4" class="hidden-sm-and-down">
           <v-card>
-            <v-container fluid fill-height>
+            <v-container fluid fill-height v-if="!(job.owner == false && type == 'client')">
               <v-row justify="center" align="center">
                 <v-col cols="8">
                   <v-btn
@@ -83,12 +83,30 @@
                     class="ma-2"
                     width="100%"
                     route
-                    :to="{ name: 'applyjob', params: { id: $route.params.id } }"
+                    :to="{ name: 'applyjob', params: { id: this.$route.params.id } }"
+                    v-if="type == 'freelancer'"
                     >Submit a Proposal</v-btn
                   >
-                  <!-- <v-btn rounded color="white" class="ma-2" width="100%"
-                    ><v-icon class="mx-2">mdi-heart</v-icon>Save Job</v-btn
-                  > -->
+                  <v-btn
+                    rounded
+                    color="primary"
+                    class="ma-2"
+                    width="100%"
+                    route
+                    v-if="type == 'client' && job.owner == true"
+                    :to="{ name: 'allproposals', params: { id: this.$route.params.id } }"
+                    >View Proposals</v-btn
+                  >
+                  <v-btn
+                    rounded
+                    color="error"
+                    class="ma-2"
+                    width="100%"
+                    route
+                    v-if="type == 'client' && job.owner == true"
+                    @click="deleteJob"
+                    >Delete Job</v-btn
+                  >
                 </v-col>
               </v-row>
             </v-container>
@@ -96,15 +114,34 @@
         </v-col>
       </v-row>
     </v-container>
-    <v-bottom-navigation grow fixed class="hidden-md-and-up">
-      <v-btn color="primary" route :to="{ name: 'applyjob', params: { id: $route.params.id } }">
+    <v-bottom-navigation
+      grow
+      fixed
+      class="hidden-md-and-up"
+      v-if="!(job.owner == false && type == 'client')"
+    >
+      <v-btn
+        color="primary"
+        route
+        :to="{ name: 'applyjob', params: { id: this.$route.params.id } }"
+        v-if="type == 'freelancer'"
+      >
         <span class="white--text">Submit a Proposal</span>
         <v-icon class="white--text">mdi-file-document</v-icon>
       </v-btn>
-      <!-- <v-btn color="white">
-        <span>Save Job</span>
-        <v-icon>mdi-heart</v-icon>
-      </v-btn> -->
+      <v-btn
+        color="primary"
+        route
+        v-if="type == 'client' && job.owner == true"
+        :to="{ name: 'allproposals', params: { id: this.$route.params.id } }"
+      >
+        <span class="white--text">View Proposals</span>
+        <v-icon class="white--text">mdi-eye</v-icon>
+      </v-btn>
+      <v-btn color="error" route v-if="type == 'client' && job.owner == true" @click="deleteJob">
+        <span class="white--text">Delete Job</span>
+        <v-icon class="white--text">mdi-delete</v-icon>
+      </v-btn>
     </v-bottom-navigation>
   </div>
 </template>
@@ -116,9 +153,11 @@ export default {
   data() {
     return {
       job: {},
+      type: '',
     };
   },
   mounted() {
+    this.type = JSON.parse(localStorage.getItem('userData')).type;
     this.fetchJob();
   },
   methods: {
@@ -127,22 +166,15 @@ export default {
         console.log(response.data);
         this.job = response.data;
       });
-      // this.job = {
-      //   skills: ['Adobe Photoshop', 'Adobe Illustrator', 'Video Editing'],
-      //   _id: '608ea0d479e5d50a98e11550',
-      //   headline: 'Graphic Designer for Social Media Facebook Image Ads and Onlineshop graphics',
-      //   description:
-      //     'I‘m looking for a graphic designer who has experience with Facebook ads.
-      // I work with different clients to optimize their social media ads performance and
-      // K need a partner who can create attention strong image ads, is very creative and
-      //  works fast.',
-      //   category: 'Graphic Design',
-      //   experience: 'Entry level',
-      //   minHourlyRate: 20,
-      //   maxHourlyRate: 5000,
-      //   duration: '3 to 6 months',
-      //   id: '608ea0d479e5d50a98e11550',
-      // };
+    },
+    deleteJob() {
+      api.DeleteAJob(this.$route.params.id).then(res => {
+        this.$router.push('/feed');
+        this.$store.state.snackbarMessage = 'Job Deleted';
+        this.$store.state.snackbar = true;
+        this.$store.state.snackbarColor = 'red';
+        console.log(res);
+      });
     },
   },
 };

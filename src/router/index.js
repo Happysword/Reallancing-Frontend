@@ -32,6 +32,11 @@ const routes = [
         component: () => import('@/views/Freelancer/ApplyJob.vue'),
       },
       {
+        path: '/createjob',
+        name: 'CreateJob',
+        component: () => import('@/views/Client/CreateJob.vue'),
+      },
+      {
         path: '/feed',
         name: 'feed',
         component: () => import('@/views/Freelancer/Feed.vue'),

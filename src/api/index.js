@@ -68,6 +68,28 @@ export default {
       .then(response => response.data)
       .catch(() => false);
   },
+  async fetchAllCategories() {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem('userToken'))}`,
+      },
+    };
+    return axios
+      .get('http://localhost:3000/api/v1/categories', config)
+      .then(response => response.data)
+      .catch(() => false);
+  },
+  async fetchAllSkills() {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem('userToken'))}`,
+      },
+    };
+    return axios
+      .get('http://localhost:3000/api/v1/skills', config)
+      .then(response => response.data)
+      .catch(() => false);
+  },
   async DeleteAJob(id) {
     const config = {
       headers: {
@@ -108,9 +130,24 @@ export default {
       },
     };
     return axios
-      .post(`http://localhost:3000/api/v1/jobs/${jobID}/proposals`, {
-        coverLetter: propsalText,
-      }, config)
+      .post(
+        `http://localhost:3000/api/v1/jobs/${jobID}/proposals`,
+        {
+          coverLetter: propsalText,
+        },
+        config,
+      )
+      .then(response => response.data)
+      .catch(() => false);
+  },
+  async createAJob(job) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem('userToken'))}`,
+      },
+    };
+    return axios
+      .post('http://localhost:3000/api/v1/jobs', job, config)
       .then(response => response.data)
       .catch(() => false);
   },

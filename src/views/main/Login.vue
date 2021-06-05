@@ -1,6 +1,6 @@
 <template>
   <v-container class="fill-height">
-    <v-row justify="center" class="mt-1">
+    <v-row no-gutters justify="center" class="mt-1">
       <v-col cols="auto" class="ma-0 pa-0">
         <v-card color="white" elevation="6">
           <v-form ref="loginform" v-model="valid">
@@ -41,7 +41,7 @@
             <v-row justify="center" align="center" class="px-5 mt-0 mb-10">
               <v-col cols="9" class="text-center">
                 <v-btn
-                  @click="submitForm"
+                  @click.prevent="submitForm"
                   width="70%"
                   rounded
                   outlined

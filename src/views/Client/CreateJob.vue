@@ -392,7 +392,12 @@ export default {
         duration: this.durationArr[this.jobInfo.duration],
       };
       console.log(job);
-      api.createAJob(job);
+      api.createAJob(job).then(() => {
+        this.$router.push({ name: 'feed' });
+        this.$store.state.snackbarMessage = 'Job Created';
+        this.$store.state.snackbar = true;
+        this.$store.state.snackbarColor = 'primary';
+      });
     },
   },
   mounted() {

@@ -1,3 +1,4 @@
+/* eslint-disable implicit-arrow-linebreak */
 <template>
   <v-container class="pt-10">
     <!-- Main Form -->
@@ -58,7 +59,7 @@
                   required
                   v-model="mainData.password"
                   :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                  :rules="[rules.required]"
+                  :rules="[rules.required, rules.MinPassLen]"
                   :type="showPassword ? 'text' : 'password'"
                   @click:append="showPassword = !showPassword"
                   dense
@@ -71,7 +72,10 @@
                   required
                   v-model="mainData.passwordConfirm"
                   :append-icon="showPasswordConfirm ? 'mdi-eye' : 'mdi-eye-off'"
-                  :rules="[rules.required]"
+                  :rules="[
+                    rules.required,
+                    rules.passwordMatch(mainData.passwordConfirm, mainData.password),
+                  ]"
                   :type="showPasswordConfirm ? 'text' : 'password'"
                   @click:append="showPasswordConfirm = !showPasswordConfirm"
                   dense
@@ -146,7 +150,6 @@
           height="35"
           text
           fab
-          @click="currentStep = i + 1"
           :disabled="maxStep < i + 1"
           :class="{
             'button-active': i + 1 == currentStep,
@@ -170,10 +173,10 @@
         </v-btn>
       </v-col>
 
-      <v-col cols="8">
+      <v-col cols="12" sm="8">
         <v-card color="white" class="center-flex ma-0 pa-0" tile elevation="12">
           <!-- Title & Overview -->
-          <v-form>
+          <v-form ref="firstform">
             <v-row
               v-show="currentStep == 1"
               no-gutters
@@ -209,7 +212,7 @@
                   label="Hourly Rate"
                   required
                   v-model="freelancerInfo.hourlyRate"
-                  :rules="[rules.required]"
+                  :rules="[rules.required, rules.hourlyRate]"
                   dense
                   type="number"
                 ></v-text-field>
@@ -221,7 +224,8 @@
                   required
                   placeholder="A brief about you"
                   v-model="freelancerInfo.overview"
-                  :rules="[rules.required]"
+                  counter
+                  :rules="[rules.required, rules.overviewLength]"
                   dense
                 ></v-textarea>
               </v-col>
@@ -229,7 +233,16 @@
                 <v-card color="secondbackground" elevation="0" class="pa-5 ma-0 border">
                   <v-row justify="end">
                     <v-col cols="auto">
-                      <v-btn color="primary" rounded @click="nextStep(1)">Continue</v-btn></v-col
+                      <v-btn
+                        color="primary"
+                        rounded
+                        @click="
+                          () => {
+                            if ($refs.firstform.validate()) nextStep(1);
+                          }
+                        "
+                        >Continue</v-btn
+                      ></v-col
                     >
                   </v-row>
                 </v-card>
@@ -238,7 +251,7 @@
           </v-form>
 
           <!-- Education -->
-          <v-form>
+          <v-form ref="secondform">
             <v-row
               v-show="currentStep == 2"
               no-gutters
@@ -263,26 +276,21 @@
                   outlined
                   label="University"
                   required
-                  v-model="freelancerInfo.university"
+                  v-model="freelancerInfo.education.university"
                   :rules="[rules.required]"
                   dense
                 ></v-text-field>
               </v-col>
               <v-col cols="10" class="text-center px-3">
-                <div class="font-weight-bold text--lighten-1 text-h4">
-                  Graduation Date
-                </div>
-                <v-date-picker
-                  max="2025"
-                  min="1960"
-                  type="month"
-                  value="2021-01"
-                  v-model="freelancerInfo.graduation"
-                  color="primary"
-                  landscape
-                  header-color="primary"
+                <v-text-field
+                  outlined
+                  label="Graduation Year"
+                  type="number"
+                  v-model="freelancerInfo.education.graduation"
+                  :rules="[rules.required, rules.isAYear]"
+                  dense
                 >
-                </v-date-picker>
+                </v-text-field>
               </v-col>
               <v-col cols="12" class="text-center">
                 <v-card color="secondbackground" elevation="0" class="pa-5 ma-0 border">
@@ -293,7 +301,16 @@
                       ></v-col
                     >
                     <v-col cols="auto">
-                      <v-btn color="primary" rounded @click="nextStep(2)">Continue</v-btn></v-col
+                      <v-btn
+                        color="primary"
+                        rounded
+                        @click="
+                          () => {
+                            if ($refs.secondform.validate()) nextStep(2);
+                          }
+                        "
+                        >Continue</v-btn
+                      ></v-col
                     >
                   </v-row>
                 </v-card>
@@ -302,7 +319,7 @@
           </v-form>
 
           <!-- Expertise -->
-          <v-form>
+          <v-form ref="thirdform">
             <v-row
               v-show="currentStep == 3"
               no-gutters
@@ -322,9 +339,48 @@
                   </v-row>
                 </v-card>
               </v-col>
-              <v-col cols="12" class="text-center pa-10">
-                This is step three
+              <v-col cols="10" class="text-center px-3 mt-5">
+                <v-text-field
+                  outlined
+                  label="Company"
+                  required
+                  v-model="freelancerInfo.workExperience.company"
+                  :rules="[rules.required]"
+                  dense
+                ></v-text-field>
               </v-col>
+              <v-col cols="10" class="text-center px-3">
+                <v-text-field
+                  outlined
+                  label="Job Title"
+                  required
+                  v-model="freelancerInfo.workExperience.jobTitle"
+                  :rules="[rules.required]"
+                  dense
+                ></v-text-field>
+              </v-col>
+              <v-col cols="10" class="text-center px-3">
+                <v-text-field
+                  outlined
+                  label="Duration In Months"
+                  required
+                  v-model="freelancerInfo.workExperience.durationInMonths"
+                  :rules="[rules.required, rules.biggerthanzero]"
+                  dense
+                  type="number"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="10" class="text-center">
+                <v-radio-group v-model="mainData.experienceLevel" mandatory>
+                  <template v-slot:label>
+                    <div class="text-center">Experience Level</div>
+                  </template>
+                  <v-radio value="beginner" label="Beginner"> </v-radio>
+                  <v-radio value="intermediate" label="Intermediate"> </v-radio>
+                  <v-radio value="Expert" label="Expert"> </v-radio>
+                </v-radio-group>
+              </v-col>
+
               <v-col cols="12" class="text-center">
                 <v-card color="secondbackground" elevation="0" class="pa-5 ma-0 border">
                   <v-row justify="space-between">
@@ -334,7 +390,16 @@
                       ></v-col
                     >
                     <v-col cols="auto">
-                      <v-btn color="primary" rounded @click="nextStep(3)">Continue</v-btn></v-col
+                      <v-btn
+                        color="primary"
+                        rounded
+                        @click="
+                          () => {
+                            if ($refs.thirdform.validate()) nextStep(3);
+                          }
+                        "
+                        >Continue</v-btn
+                      ></v-col
                     >
                   </v-row>
                 </v-card>
@@ -343,7 +408,7 @@
           </v-form>
 
           <!-- Category & Skills -->
-          <v-form>
+          <v-form ref="fourthform">
             <v-row
               v-show="currentStep == 4"
               no-gutters
@@ -363,9 +428,37 @@
                   </v-row>
                 </v-card>
               </v-col>
-              <v-col cols="12" class="text-center pa-10">
-                This is step four
+
+              <v-col cols="10" class="text-center px-3 mt-5">
+                <v-select
+                  outlined
+                  label="Category"
+                  required
+                  v-model="freelancerInfo.category"
+                  :rules="[rules.required]"
+                  dense
+                  :items="categriesArray"
+                  clearable
+                  attach
+                  chips
+                  multiple
+                ></v-select>
               </v-col>
+              <v-col cols="10" class="text-center px-3">
+                <v-select
+                  :items="skillsArray"
+                  v-model="freelancerInfo.skills"
+                  label="Skills"
+                  clearable
+                  attach
+                  :rules="[rules.emptyArray]"
+                  chips
+                  outlined
+                  dense
+                  multiple
+                ></v-select>
+              </v-col>
+
               <v-col cols="12" class="text-center">
                 <v-card color="secondbackground" elevation="0" class="pa-5 ma-0 border">
                   <v-row justify="space-between">
@@ -375,7 +468,16 @@
                       ></v-col
                     >
                     <v-col cols="auto">
-                      <v-btn color="primary" rounded @click="nextStep(4)">Continue</v-btn></v-col
+                      <v-btn
+                        color="primary"
+                        rounded
+                        @click="
+                          () => {
+                            if ($refs.fourthform.validate()) nextStep(4);
+                          }
+                        "
+                        >Continue</v-btn
+                      ></v-col
                     >
                   </v-row>
                 </v-card>
@@ -384,7 +486,7 @@
           </v-form>
 
           <!-- Languages -->
-          <v-form>
+          <v-form ref="fifthform">
             <v-row
               v-show="currentStep == 5"
               no-gutters
@@ -399,13 +501,34 @@
                       <h3 class="text-center font-weight-light">{{ steps[4] }}</h3></v-col
                     >
                     <v-col class="text-overline grey--text" cols="12">
-                      1 of {{ steps.length }}
+                      5 of {{ steps.length }}
                     </v-col>
                   </v-row>
                 </v-card>
               </v-col>
-              <v-col cols="12" class="text-center pa-10">
-                This is step five
+
+              <v-col cols="10" class="text-center">
+                <v-radio-group v-model="freelancerInfo.languages[0].level" mandatory>
+                  <template v-slot:label>
+                    <div class="text-center">Arabic Level</div>
+                  </template>
+                  <v-radio value="basic" label="Basic"> </v-radio>
+                  <v-radio value="conversational" label="Conversational"> </v-radio>
+                  <v-radio value="fluent" label="Fluent"> </v-radio>
+                  <v-radio value="native or bilingual" label="Native or Bilingual"> </v-radio>
+                </v-radio-group>
+              </v-col>
+
+              <v-col cols="10" class="text-center">
+                <v-radio-group v-model="freelancerInfo.languages[1].level" mandatory>
+                  <template v-slot:label>
+                    <div class="text-center">English Level</div>
+                  </template>
+                  <v-radio value="basic" label="Basic"> </v-radio>
+                  <v-radio value="conversational" label="Conversational"> </v-radio>
+                  <v-radio value="fluent" label="Fluent"> </v-radio>
+                  <v-radio value="native or bilingual" label="Native or Bilingual"> </v-radio>
+                </v-radio-group>
               </v-col>
               <v-col cols="12" class="text-center">
                 <v-card color="secondbackground" elevation="0" class="pa-5 ma-0 border">
@@ -416,7 +539,16 @@
                       ></v-col
                     >
                     <v-col cols="auto">
-                      <v-btn color="primary" rounded @click="nextStep(4)">Continue</v-btn></v-col
+                      <v-btn
+                        color="primary"
+                        rounded
+                        @click="
+                          () => {
+                            if ($refs.firstform.validate()) submitFormFreelancer();
+                          }
+                        "
+                        >Submit</v-btn
+                      ></v-col
                     >
                   </v-row>
                 </v-card>
@@ -436,11 +568,47 @@ export default {
   data() {
     return {
       steps: ['Title & Overview', 'Education', 'Expertise', 'Category & Skills', 'Languages'],
+      categriesArray: [],
+      skillsArray: [],
       currentStep: 1,
       maxStep: 1,
       isFreelancer: false,
-      mainData: {},
-      freelancerInfo: {},
+      mainData: {
+        firstName: '',
+        lastName: '',
+        email: '',
+        type: '',
+        password: '',
+        passwordConfirm: '',
+        location: '',
+      },
+      freelancerInfo: {
+        title: '',
+        overview: '',
+        hourlyRate: null,
+        education: {
+          university: '',
+          graduation: null,
+        },
+        workExperience: {
+          company: '',
+          jobTitle: '',
+          durationInMonths: null,
+        },
+        experienceLevel: '',
+        category: '',
+        skills: [],
+        languages: [
+          {
+            name: 'Arabic',
+            level: '',
+          },
+          {
+            name: 'English',
+            level: '',
+          },
+        ],
+      },
       valid: true,
       showPassword: false,
       showPasswordConfirm: false,
@@ -450,6 +618,15 @@ export default {
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
           return pattern.test(value) || 'Not a valid Email';
         },
+        isAYear: value => (value >= 1950 && value <= 2025) || 'Must Be between 1960 and 2025',
+        hourlyRate: value => (value >= 10 && value <= 2000) || 'Must Be between 10 and 2000',
+        biggerthanzero: value => value > 0 || 'Can not work less than 1 month',
+        overviewLength: v =>
+          // eslint-disable-next-line implicit-arrow-linebreak
+          (v.length >= 50 && v.length <= 5000) || 'Min 50 characters, Max 5000 characters',
+        emptyArray: v => v.length > 0 || 'Min One Skill is needed',
+        passwordMatch: (v1, v2) => v1 === v2 || 'Passwords Do not Match',
+        MinPassLen: v => v.length >= 8 || 'Password min 8 Characters',
       },
       sendRequest: false,
     };
@@ -492,6 +669,36 @@ export default {
         this.sendRequest = false;
         this.$refs.registerform.reset();
       }
+    },
+    async submitFormFreelancer() {
+      // Validate Input
+      if (!this.$refs.registerform.validate()) return;
+
+      // Disable the button
+      this.sendRequest = true;
+
+      // Send the request
+      const registerResponse = await api.loginUser({
+        email: this.mainData,
+        password: this.mainData,
+      });
+
+      // If the request was successful,
+      if (registerResponse.status === 200) {
+        // Display success and route to home
+        this.$store.state.snackbarMessage = 'Welcome to Our Website';
+        this.$store.state.snackbar = true;
+        this.$store.state.snackbarColor = 'green accent-4';
+        this.$router.push('/');
+      } else {
+        // Display success and route to home
+        this.$store.state.snackbarMessage = 'Wrong Email or Password';
+        this.$store.state.snackbar = true;
+        this.$store.state.snackbarColor = 'red accent-4';
+      }
+      // Renable the button
+      this.sendRequest = false;
+      this.$refs.registerform.reset();
     },
   },
 };

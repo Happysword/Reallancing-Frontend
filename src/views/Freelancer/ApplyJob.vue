@@ -34,7 +34,9 @@
             </div>
             <v-divider></v-divider>
             <div class="px-5 py-2">
-              <v-btn rounded color="primary" class="ma-2">Submit a Proposal</v-btn>
+              <v-btn rounded color="primary" class="ma-2" @click="createAProposal"
+                >Submit a Proposal</v-btn
+              >
             </div>
           </v-card>
         </v-col>
@@ -44,11 +46,25 @@
 </template>
 
 <script>
+import api from '../../api/index';
+
 export default {
   data() {
     return {
       coverletter: '',
     };
+  },
+  methods: {
+    createAProposal() {
+      api.createAProposal(this.coverletter, this.$route.params.id).then(res => {
+        if (res) {
+          this.$router.push({ name: 'myproposals' });
+          this.$store.state.snackbarMessage = 'Proposal Submitted';
+          this.$store.state.snackbar = true;
+          this.$store.state.snackbarColor = 'primary';
+        }
+      });
+    },
   },
 };
 </script>

@@ -24,12 +24,32 @@ const routes = [
       {
         path: '/jobs/:id',
         name: 'viewjob',
-        component: () => import('@/views/Jobs/ViewJob.vue'),
+        component: () => import('@/views/Freelancer/ViewJob.vue'),
       },
       {
         path: '/applyjob/:id',
         name: 'applyjob',
-        component: () => import('@/views/Jobs/ApplyJob.vue'),
+        component: () => import('@/views/Freelancer/ApplyJob.vue'),
+      },
+      {
+        path: '/createjob',
+        name: 'CreateJob',
+        component: () => import('@/views/Client/CreateJob.vue'),
+      },
+      {
+        path: '/feed',
+        name: 'feed',
+        component: () => import('@/views/Freelancer/Feed.vue'),
+      },
+      {
+        path: '/myproposals',
+        name: 'myproposals',
+        component: () => import('@/views/Freelancer/MyProposals.vue'),
+      },
+      {
+        path: '/allproposals/:id',
+        name: 'allproposals',
+        component: () => import('@/views/Proposals/AllProposals.vue'),
       },
       {
         path: '/proposals/:id',

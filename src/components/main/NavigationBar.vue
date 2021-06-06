@@ -166,6 +166,11 @@ export default {
         to: '/admin',
         icon: 'mdi-cog-outline',
       },
+      {
+        title: 'My Proposals',
+        to: '/myproposals',
+        icon: 'mdi-clipboard-list-outline',
+      },
     ],
     drawer: false,
   }),

@@ -128,7 +128,7 @@ export default {
         this.$store.state.snackbar = true;
         this.$store.state.snackbarColor = 'green accent-4';
         this.$store.state.currentUser = userdata.user;
-        this.$router.push('/');
+        this.$router.push('/feed');
       } else {
         // Display success and route to home
         this.$store.state.snackbarMessage = 'Wrong Email or Password';

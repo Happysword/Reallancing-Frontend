@@ -20,7 +20,7 @@ export default {
       },
     };
     return axios
-      .get(`http://localhost:3000/api/v1/jobs/${id}`, config)
+      .get(`${baseURL}/api/v1/jobs/${id}`, config)
       .then(response => response.data)
       .catch(() => false);
   },
@@ -31,7 +31,7 @@ export default {
       },
     };
     return axios
-      .get(`http://localhost:3000/api/v1/jobs?page=${page}`, config)
+      .get(`${baseURL}/api/v1/jobs?page=${page}`, config)
       .then(response => response.data)
       .catch(() => false);
   },
@@ -42,7 +42,7 @@ export default {
       },
     };
     return axios
-      .get('http://localhost:3000/api/v1/users/me/jobs', config)
+      .get(`${baseURL}/api/v1/users/me/jobs`, config)
       .then(response => response.data)
       .catch(() => false);
   },
@@ -53,7 +53,7 @@ export default {
       },
     };
     return axios
-      .get(`http://localhost:3000/api/v1/jobs/${jobid}/proposals`, config)
+      .get(`${baseURL}/api/v1/jobs/${jobid}/proposals`, config)
       .then(response => response.data)
       .catch(() => false);
   },
@@ -64,7 +64,7 @@ export default {
       },
     };
     return axios
-      .get('http://localhost:3000/api/v1/proposals', config)
+      .get(`${baseURL}/api/v1/proposals`, config)
       .then(response => response.data)
       .catch(() => false);
   },
@@ -75,7 +75,7 @@ export default {
       },
     };
     return axios
-      .get('http://localhost:3000/api/v1/categories', config)
+      .get(`${baseURL}/api/v1/categories`, config)
       .then(response => response.data)
       .catch(() => false);
   },
@@ -86,7 +86,7 @@ export default {
       },
     };
     return axios
-      .get('http://localhost:3000/api/v1/skills', config)
+      .get(`${baseURL}/api/v1/skills`, config)
       .then(response => response.data)
       .catch(() => false);
   },
@@ -97,7 +97,7 @@ export default {
       },
     };
     return axios
-      .delete(`http://localhost:3000/api/v1/jobs/${id}`, config)
+      .delete(`${baseURL}/api/v1/jobs/${id}`, config)
       .then(response => response.data)
       .catch(() => false);
   },
@@ -108,7 +108,7 @@ export default {
       },
     };
     return axios
-      .delete(`http://localhost:3000/api/v1/proposals/${id}`, config)
+      .delete(`${baseURL}/api/v1/proposals/${id}`, config)
       .then(response => response.data)
       .catch(() => false);
   },
@@ -119,7 +119,7 @@ export default {
       },
     };
     return axios
-      .get(`http://localhost:3000/api/v1/jobs?headline=${jobName}`, config)
+      .get(`${baseURL}/api/v1/jobs?headline=${jobName}`, config)
       .then(response => response.data)
       .catch(() => false);
   },
@@ -131,7 +131,7 @@ export default {
     };
     return axios
       .post(
-        `http://localhost:3000/api/v1/jobs/${jobID}/proposals`,
+        `${baseURL}/api/v1/jobs/${jobID}/proposals`,
         {
           coverLetter: propsalText,
         },
@@ -147,7 +147,7 @@ export default {
       },
     };
     return axios
-      .post('http://localhost:3000/api/v1/jobs', job, config)
+      .post(`${baseURL}/api/v1/jobs`, job, config)
       .then(response => response.data)
       .catch(() => false);
   },
@@ -158,7 +158,18 @@ export default {
       },
     };
     return axios
-      .get(`http://localhost:3000/api/v1/proposals/${id}`, config)
+      .get(`${baseURL}/api/v1/proposals/${id}`, config)
+      .then(response => response.data)
+      .catch(() => false);
+  },
+  async fetchUserProfile(id) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem('userToken'))}`,
+      },
+    };
+    return axios
+      .get(`${baseURL}/api/v1/users/${id}`, config)
       .then(response => response.data)
       .catch(() => false);
   },

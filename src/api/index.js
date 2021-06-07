@@ -123,7 +123,8 @@ export default {
       .then(response => response.data)
       .catch(() => false);
   },
-  async createAProposal(propsalText, jobID) {
+
+  async createAProposal(propsalText, proposedRate, jobID) {
     const config = {
       headers: {
         Authorization: `Bearer ${JSON.parse(localStorage.getItem('userToken'))}`,
@@ -134,6 +135,7 @@ export default {
         `${baseURL}/api/v1/jobs/${jobID}/proposals`,
         {
           coverLetter: propsalText,
+          proposedHourlyRate: proposedRate,
         },
         config,
       )
@@ -148,6 +150,21 @@ export default {
     };
     return axios
       .post(`${baseURL}/api/v1/jobs`, job, config)
+      .then(response => response.data)
+      .catch(() => false);
+  },
+  async SendProposalAcceptance(proposalId) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem('userToken'))}`,
+      },
+    };
+    return axios
+      .post(
+        `http://localhost:3000/api/v1/proposals/${proposalId}/sendProposalAcceptance`,
+        {},
+        config,
+      )
       .then(response => response.data)
       .catch(() => false);
   },

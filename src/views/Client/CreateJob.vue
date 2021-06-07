@@ -47,7 +47,7 @@
       <v-col cols="8">
         <v-card color="white" class="center-flex ma-0 pa-0" tile elevation="12">
           <!-- Title & Overview -->
-          <v-form>
+          <v-form ref="firstform">
             <v-row
               v-show="currentStep == 1"
               no-gutters
@@ -83,7 +83,7 @@
                   label="Min Hourly Rate"
                   required
                   v-model="jobInfo.minHourlyRate"
-                  :rules="[rules.required]"
+                  :rules="[rules.required, rules.min3]"
                   dense
                   type="number"
                 ></v-text-field>
@@ -94,7 +94,7 @@
                   label="Max Hourly Rate"
                   required
                   v-model="jobInfo.maxHourlyRate"
-                  :rules="[rules.required]"
+                  :rules="[rules.required, rules.min3]"
                   dense
                   type="number"
                 ></v-text-field>
@@ -114,15 +114,25 @@
                 <v-card color="secondbackground" elevation="0" class="pa-5 ma-0 border">
                   <v-row justify="end">
                     <v-col cols="auto">
-                      <v-btn color="primary" rounded @click="nextStep(1)">Continue</v-btn></v-col
+                      <v-btn
+                        color="primary"
+                        rounded
+                        @click="
+                          () => {
+                            if ($refs.firstform.validate()) nextStep(1);
+                          }
+                        "
+                        >Continue</v-btn
+                      ></v-col
                     >
                   </v-row>
                 </v-card>
               </v-col>
             </v-row>
+          </v-form>
 
-            <!-- Expertise -->
-
+          <!-- Expertise -->
+          <v-form ref="secondform">
             <v-row
               v-show="currentStep == 2"
               no-gutters
@@ -171,14 +181,22 @@
                       ></v-col
                     >
                     <v-col cols="auto">
-                      <v-btn color="primary" rounded @click="nextStep(2)">Continue</v-btn></v-col
+                      <v-btn
+                        color="primary"
+                        rounded
+                        @click="
+                          () => {
+                            if (typeof jobInfo.experience !== 'undefined') nextStep(2);
+                          }
+                        "
+                        >Continue</v-btn
+                      ></v-col
                     >
                   </v-row>
                 </v-card>
               </v-col>
             </v-row>
           </v-form>
-
           <!-- Category -->
           <v-form>
             <v-row
@@ -214,7 +232,16 @@
                       ></v-col
                     >
                     <v-col cols="auto">
-                      <v-btn color="primary" rounded @click="nextStep(3)">Continue</v-btn></v-col
+                      <v-btn
+                        color="primary"
+                        rounded
+                        @click="
+                          () => {
+                            if (typeof jobInfo.categoriesIndex !== 'undefined') nextStep(3);
+                          }
+                        "
+                        >Continue</v-btn
+                      ></v-col
                     >
                   </v-row>
                 </v-card>
@@ -257,7 +284,16 @@
                       ></v-col
                     >
                     <v-col cols="auto">
-                      <v-btn color="primary" rounded @click="nextStep(4)">Continue</v-btn></v-col
+                      <v-btn
+                        color="primary"
+                        rounded
+                        @click="
+                          () => {
+                            if (jobInfo.skillsIndex.length > 0) nextStep(4);
+                          }
+                        "
+                        >Continue</v-btn
+                      ></v-col
                     >
                   </v-row>
                 </v-card>
@@ -315,7 +351,16 @@
                       ></v-col
                     >
                     <v-col cols="auto">
-                      <v-btn color="primary" rounded @click="createJob">Submit</v-btn></v-col
+                      <v-btn
+                        color="primary"
+                        rounded
+                        @click="
+                          () => {
+                            if (typeof jobInfo.duration !== 'undefined') createJob();
+                          }
+                        "
+                        >Submit</v-btn
+                      ></v-col
                     >
                   </v-row>
                 </v-card>
@@ -354,6 +399,7 @@ export default {
         },
         min1: v => (!!v && v.length >= 10) || 'Min 10 characters',
         min2: v => (!!v && v.length >= 50) || 'Min 50 characters',
+        min3: v => (!!v && v >= 10 && v <= 10000) || 'Hourly Rate Should be between 10 and 10,000',
       },
       sendRequest: false,
       categories: [],
@@ -402,7 +448,22 @@ export default {
   },
   mounted() {
     this.fetchAllCategories();
-    this.fetchAllSkills();
+    // this.fetchAllSkills();
+  },
+  computed: {
+    categoriesIndex() {
+      return this.jobInfo.categoriesIndex;
+    },
+  },
+  watch: {
+    categoriesIndex() {
+      // eslint-disable-next-line no-underscore-dangle
+      const categoriesID = this.categories[this.jobInfo.categoriesIndex]._id;
+      api.getCategorySkills(categoriesID).then(res => {
+        this.skills = res.data;
+        console.log(this.skills);
+      });
+    },
   },
 };
 </script>

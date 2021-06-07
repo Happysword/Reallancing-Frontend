@@ -62,6 +62,7 @@
                     width="100%"
                     id="greenbtn"
                     v-if="type == 'client'"
+                    @click="sendProposalAcceptance"
                   >
                     Hire Freelancer
                   </v-btn>
@@ -111,7 +112,28 @@
               <v-col cols="12" md="9" sm="7" class="px-0">
                 <div class="px-5">
                   <v-row class="pt-3 px-3">
-                    <p class="headline pt-1">Proposal Details</p>
+                    <v-row v-if="proposal.status === 'Pending' && type === 'freelancer'">
+                      <v-col>
+                        <p class="headline pt-1">Proposal Details</p>
+                      </v-col>
+                      <v-col>
+                        <p class="subtitle-2 pt-1">Pending</p>
+                      </v-col>
+                      <v-col>
+                        <v-icon color="orange">mdi-circle</v-icon>
+                      </v-col>
+                    </v-row>
+                    <v-row v-if="proposal.status === 'Accepted' && type === 'freelancer'">
+                      <v-col>
+                        <p class="headline pt-1">Proposal Details</p>
+                      </v-col>
+                      <v-col>
+                        <p class="subtitle-2 pt-1">Accepted</p>
+                      </v-col>
+                      <v-col>
+                        <v-icon color="green">mdi-circle</v-icon>
+                      </v-col>
+                    </v-row>
                     <v-spacer></v-spacer>
                     <p class="display-2 font-weight-medium pr-4">
                       ${{ proposal.proposedHourlyRate }}/hr
@@ -168,6 +190,14 @@ export default {
         this.$store.state.snackbar = true;
         this.$store.state.snackbarColor = 'red';
         console.log(res);
+      });
+    },
+    sendProposalAcceptance() {
+      api.SendProposalAcceptance(this.$route.params.id).then(() => {
+        this.$router.go(-1);
+        this.$store.state.snackbarMessage = 'Proposal Accepted';
+        this.$store.state.snackbar = true;
+        this.$store.state.snackbarColor = 'primary';
       });
     },
   },

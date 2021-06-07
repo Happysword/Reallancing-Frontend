@@ -24,6 +24,14 @@
             <v-icon color="white" class="mr-5">{{ item.icon }}</v-icon> {{ item.title }}
           </v-list-item-title>
         </v-list-item>
+        <v-list-item class="white--text" to="/myproposals">
+          <v-list-item-title
+            class="text-subtitle-1 font-weight-light white--text text-center"
+            v-if="type == 'freelancer'"
+          >
+            <v-icon color="white" class="mr-5">mdi-clipboard-list-outline</v-icon> My Proposals
+          </v-list-item-title>
+        </v-list-item>
         <template v-if="$store.state.currentUser === null">
           <v-list-item class="white--text" to="/login">
             <v-list-item-title class="text-subtitle-1 font-weight-light white--text text-center">
@@ -79,6 +87,18 @@
               :to="link.to"
             >
               {{ link.title }}
+            </v-btn>
+            <v-btn
+              v-if="type == 'freelancer'"
+              text
+              tile
+              class="text-h5"
+              height="70"
+              width="120"
+              color="white"
+              to="/myproposals"
+            >
+              My Proposals
             </v-btn>
           </v-col>
 
@@ -168,11 +188,12 @@ export default {
         icon: 'mdi-cog-outline',
       },
       {
-        title: 'My Proposals',
-        to: '/myproposals',
-        icon: 'mdi-clipboard-list-outline',
+        title: 'Feed',
+        to: '/feed',
+        icon: 'mdi-comment-quote-outline',
       },
     ],
+    type: '',
     drawer: false,
   }),
   methods: {
@@ -185,8 +206,25 @@ export default {
       }
     },
   },
+  mounted() {
+    this.type = JSON.parse(localStorage.getItem('userData')).type;
+  },
   created() {
     this.$store.state.currentUser = JSON.parse(localStorage.getItem('userData'));
+  },
+  computed: {
+    typeUser() {
+      return this.$store.state.currentUser;
+    },
+  },
+  watch: {
+    typeUser() {
+      if (this.$store.state.currentUser) {
+        this.type = this.$store.state.currentUser.type;
+      } else {
+        this.type = '';
+      }
+    },
   },
 };
 </script>

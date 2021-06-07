@@ -432,6 +432,13 @@ export default {
     ],
   }),
   created() {},
+  // beforeRouteEnter(to, from, next) {
+  //   if (localStorage.getItem('userData')) {
+  //     next({ name: 'feed' });
+  //   } else {
+  //     next();
+  //   }
+  // },
 };
 </script>
 

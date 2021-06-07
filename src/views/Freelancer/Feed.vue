@@ -52,8 +52,8 @@
       </v-row>
       <div v-if="jobs.length">
         <job-card
-          v-for="job in jobs"
-          :key="job.name"
+          v-for="(job, i) in jobs"
+          :key="i"
           :category="job.category"
           :description="job.description"
           :experience="job.experience"
@@ -81,7 +81,7 @@ export default {
   data() {
     return {
       searchText: '',
-      jobs: {},
+      jobs: [],
       page: 1,
       type: '',
     };

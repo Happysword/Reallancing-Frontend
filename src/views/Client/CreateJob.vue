@@ -352,8 +352,8 @@ export default {
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
           return pattern.test(value) || 'Not a valid Email';
         },
-        min1: v => v.length >= 10 || 'Min 10 characters',
-        min2: v => v.length >= 50 || 'Min 50 characters',
+        min1: v => (!!v && v.length >= 10) || 'Min 10 characters',
+        min2: v => (!!v && v.length >= 50) || 'Min 50 characters',
       },
       sendRequest: false,
       categories: [],

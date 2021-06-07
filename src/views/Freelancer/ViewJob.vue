@@ -67,7 +67,7 @@
                 Skills and Expertise
               </v-card-title>
               <div class="pa-3">
-                <v-chip v-for="skill in job.skills" :key="skill" class="ma-2">{{ skill }}</v-chip>
+                <v-chip v-for="(skill, i) in job.skills" :key="i" class="ma-2">{{ skill }}</v-chip>
               </div>
             </div>
           </v-card>

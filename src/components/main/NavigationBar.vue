@@ -58,6 +58,7 @@
               'col-auto': $vuetify.breakpoint.mdAndUp,
               'col-2': $vuetify.breakpoint.smAndDown,
               'pa-1': $vuetify.breakpoint.smAndDown,
+              'mx-5': $vuetify.breakpoint.smAndDown,
             }"
           >
             <v-avatar size="60" tile>
@@ -81,7 +82,7 @@
             </v-btn>
           </v-col>
 
-          <v-col
+          <!-- <v-col
             :class="{
               'col-auto': $vuetify.breakpoint.mdAndUp,
               'col-4': $vuetify.breakpoint.smAndDown,
@@ -98,7 +99,7 @@
                 rounded
               ></v-text-field>
             </v-responsive>
-          </v-col>
+          </v-col> -->
           <!-- Register Button & and User menu-->
           <v-col
             cols="auto"

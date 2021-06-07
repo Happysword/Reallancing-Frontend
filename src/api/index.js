@@ -178,4 +178,31 @@ export default {
 
     return response;
   },
+  async registerUser(userData) {
+    const request = {
+      method: 'POST',
+      url: `${baseURL}/api/v1/auth/signup`,
+      data: userData,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const response = await axios(request)
+      .then(res => res)
+      .catch(err => err.response);
+
+    return response;
+  },
+  async getCategories() {
+    return axios
+      .get(`${baseURL}/api/v1/categories`)
+      .then(response => response.data)
+      .catch(() => false);
+  },
+  async getCategorySkills(catid) {
+    return axios
+      .get(`${baseURL}/api/v1/skills/${catid}`)
+      .then(response => response.data)
+      .catch(() => false);
+  },
 };

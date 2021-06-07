@@ -371,7 +371,7 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="10" class="text-center">
-                <v-radio-group v-model="mainData.experienceLevel" mandatory>
+                <v-radio-group v-model="freelancerInfo.experienceLevel" mandatory>
                   <template v-slot:label>
                     <div class="text-center">Experience Level</div>
                   </template>
@@ -436,12 +436,11 @@
                   required
                   v-model="freelancerInfo.category"
                   :rules="[rules.required]"
-                  dense
                   :items="categriesArray"
                   clearable
                   attach
                   chips
-                  multiple
+                  @change="getCategorySkills"
                 ></v-select>
               </v-col>
               <v-col cols="10" class="text-center px-3">
@@ -454,7 +453,6 @@
                   :rules="[rules.emptyArray]"
                   chips
                   outlined
-                  dense
                   multiple
                 ></v-select>
               </v-col>
@@ -544,7 +542,7 @@
                         rounded
                         @click="
                           () => {
-                            if ($refs.firstform.validate()) submitFormFreelancer();
+                            if ($refs.fifthform.validate()) submitFormFreelancer();
                           }
                         "
                         >Submit</v-btn
@@ -647,59 +645,113 @@ export default {
         this.isFreelancer = true;
       } else {
         // Send the request
-        const registerResponse = await api.loginUser({
-          email: this.mainData,
-          password: this.mainData,
+        const registerResponse = await api.registerUser({
+          ...this.mainData,
         });
 
         // If the request was successful,
-        if (registerResponse.status === 200) {
+        if (registerResponse.status === 201) {
           // Display success and route to home
-          this.$store.state.snackbarMessage = 'Welcome to Our Website';
+          this.$store.state.snackbarMessage = 'Registration Complete. You can Login now';
           this.$store.state.snackbar = true;
           this.$store.state.snackbarColor = 'green accent-4';
-          this.$router.push('/');
+          this.$router.push('/login');
+
+          // Reset the Form
+          this.$refs.registerform.reset();
+          this.mainData = {
+            firstName: '',
+            lastName: '',
+            email: '',
+            type: '',
+            password: '',
+            passwordConfirm: '',
+            location: '',
+          };
         } else {
           // Display success and route to home
-          this.$store.state.snackbarMessage = 'Wrong Email or Password';
+          this.$store.state.snackbarMessage = registerResponse.data.message;
           this.$store.state.snackbar = true;
           this.$store.state.snackbarColor = 'red accent-4';
         }
         // Renable the button
         this.sendRequest = false;
-        this.$refs.registerform.reset();
       }
     },
     async submitFormFreelancer() {
-      // Validate Input
-      if (!this.$refs.registerform.validate()) return;
-
       // Disable the button
       this.sendRequest = true;
 
       // Send the request
-      const registerResponse = await api.loginUser({
-        email: this.mainData,
-        password: this.mainData,
+      const registerResponse = await api.registerUser({
+        ...this.mainData,
+        freelancerInfo: this.freelancerInfo,
       });
 
       // If the request was successful,
-      if (registerResponse.status === 200) {
+      if (registerResponse.status === 201) {
         // Display success and route to home
         this.$store.state.snackbarMessage = 'Welcome to Our Website';
         this.$store.state.snackbar = true;
         this.$store.state.snackbarColor = 'green accent-4';
-        this.$router.push('/');
+        this.$router.push('/login');
+
+        // Reset the Form
+        this.mainData = {
+          firstName: '',
+          lastName: '',
+          email: '',
+          type: '',
+          password: '',
+          passwordConfirm: '',
+          location: '',
+        };
+        this.freelancerInfo = {
+          title: '',
+          overview: '',
+          hourlyRate: null,
+          education: {
+            university: '',
+            graduation: null,
+          },
+          workExperience: {
+            company: '',
+            jobTitle: '',
+            durationInMonths: null,
+          },
+          experienceLevel: '',
+          category: '',
+          skills: [],
+          languages: [
+            {
+              name: 'Arabic',
+              level: '',
+            },
+            {
+              name: 'English',
+              level: '',
+            },
+          ],
+        };
       } else {
         // Display success and route to home
-        this.$store.state.snackbarMessage = 'Wrong Email or Password';
+        this.$store.state.snackbarMessage = registerResponse.data.message;
         this.$store.state.snackbar = true;
         this.$store.state.snackbarColor = 'red accent-4';
       }
       // Renable the button
       this.sendRequest = false;
-      this.$refs.registerform.reset();
     },
+    async getCategorySkills() {
+      const temp = await api.getCategorySkills(this.freelancerInfo.category);
+      // eslint-disable-next-line no-underscore-dangle
+      this.skillsArray = temp.data.map(obj => ({ text: obj.name, value: obj.name }));
+    },
+  },
+  async mounted() {
+    const temp = await api.getCategories();
+    // eslint-disable-next-line no-underscore-dangle
+    this.categriesArray = temp.data.map(obj => ({ text: obj.name, value: obj._id }));
   },
 };
 </script>

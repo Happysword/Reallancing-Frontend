@@ -199,6 +199,34 @@ export default {
       .then(response => response.data)
       .catch(() => false);
   },
+  async getSkills() {
+    return axios
+      .get(`${baseURL}/api/v1/skills`)
+      .then(response => response.data)
+      .catch(() => false);
+  },
+  async getJobs() {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem('userToken'))}`,
+      },
+    };
+    return axios
+      .get(`${baseURL}/api/v1/jobs`, config)
+      .then(response => response.data)
+      .catch(() => false);
+  },
+  async getUsers() {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem('userToken'))}`,
+      },
+    };
+    return axios
+      .get(`${baseURL}/api/v1/users`, config)
+      .then(response => response.data)
+      .catch(() => false);
+  },
   async getCategorySkills(catid) {
     return axios
       .get(`${baseURL}/api/v1/skills/${catid}`)

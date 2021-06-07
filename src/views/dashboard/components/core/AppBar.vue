@@ -16,77 +16,18 @@
 
     <div class="mx-3" />
 
-    <v-btn class="ml-2" min-width="0" exact text to="/admin">
-      <v-icon>mdi-view-dashboard</v-icon>
+    <v-btn class="ml-2" min-width="0" exact text @click="logOut">
+      <v-icon>mdi-login-variant</v-icon>
     </v-btn>
-
-    <v-menu bottom left offset-y origin="top right" transition="scale-transition">
-      <template v-slot:activator="{ attrs, on }">
-        <v-btn class="ml-2" min-width="0" text v-bind="attrs" v-on="on">
-          <v-badge color="red" overlap bordered v-if="notifications.length">
-            <template v-slot:badge>
-              <span>{{notifications.length}}</span>
-            </template>
-
-            <v-icon>mdi-bell</v-icon>
-          </v-badge>
-          <v-icon v-else>mdi-bell</v-icon>
-        </v-btn>
-      </template>
-
-      <v-list :tile="false" nav>
-        <div>
-          <app-bar-item v-for="(n, i) in notifications" :key="`item-${i}`">
-            <v-list-item-title v-text="n" />
-          </app-bar-item>
-        </div>
-      </v-list>
-    </v-menu>
-
-    <v-btn class="ml-2" min-width="0" exact text to="/">
-      <v-icon>mdi-home</v-icon>
-    </v-btn>
-
   </v-app-bar>
 </template>
 
 <script>
-// Components
-import { VHover, VListItem } from 'vuetify/lib';
-
 // Utilities
 import { mapState, mapMutations } from 'vuex';
 
 export default {
   name: 'DashboardCoreAppBar',
-
-  components: {
-    AppBarItem: {
-      render(h) {
-        return h(VHover, {
-          scopedSlots: {
-            default: ({ hover }) => h(
-              VListItem,
-              {
-                attrs: this.$attrs,
-                class: {
-                  'black--text': !hover,
-                  'white--text secondary elevation-12': hover,
-                },
-                props: {
-                  activeClass: '',
-                  dark: hover,
-                  link: true,
-                  ...this.$attrs,
-                },
-              },
-              this.$slots.default,
-            ),
-          },
-        });
-      },
-    },
-  },
 
   props: {
     value: {
@@ -94,12 +35,6 @@ export default {
       default: false,
     },
   },
-
-  data: () => ({
-    notifications: [
-      'Hello',
-    ],
-  }),
 
   computed: {
     ...mapState(['drawer']),
@@ -109,6 +44,14 @@ export default {
     ...mapMutations({
       setDrawer: 'SET_DRAWER',
     }),
+    logOut() {
+      localStorage.removeItem('userData');
+      localStorage.removeItem('userToken');
+      this.$store.state.currentUser = null;
+      if (this.$route.name !== 'Home') {
+        this.$router.push('/');
+      }
+    },
   },
 };
 </script>

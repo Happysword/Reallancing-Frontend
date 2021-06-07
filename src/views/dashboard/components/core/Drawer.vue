@@ -67,9 +67,19 @@ export default {
         to: '/admin',
       },
       {
-        icon: 'mdi-account',
-        title: 'User Profile',
-        to: '/admin/pages/user',
+        icon: 'mdi-account-group',
+        title: 'Users',
+        to: '/admin/users',
+      },
+      {
+        icon: 'mdi-hammer-wrench',
+        title: 'Jobs',
+        to: '/admin/jobs',
+      },
+      {
+        icon: 'mdi-form-select',
+        title: 'Categories & Skills',
+        to: '/admin/categories_skills',
       },
     ],
   }),

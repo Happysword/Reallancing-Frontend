@@ -19,20 +19,24 @@
         </v-list>
       </template>
       <v-list expand color="topbar" class="mt-5">
-        <v-list-item v-for="(item, i) in links" class="white--text" :key="i" :to="item.to">
-          <v-list-item-title class="text-subtitle-1 font-weight-light white--text text-center">
-            <v-icon color="white" class="mr-5">{{ item.icon }}</v-icon> {{ item.title }}
-          </v-list-item-title>
-        </v-list-item>
-        <v-list-item class="white--text" to="/myproposals">
-          <v-list-item-title
-            class="text-subtitle-1 font-weight-light white--text text-center"
-            v-if="type == 'freelancer'"
-          >
-            <v-icon color="white" class="mr-5">mdi-clipboard-list-outline</v-icon> My Proposals
-          </v-list-item-title>
-        </v-list-item>
+        <template v-if="$store.state.currentUser && $store.state.currentUser.type === 'freelancer'">
+          <v-list-item class="white--text" to="/myproposals">
+            <v-list-item-title class="text-subtitle-1 font-weight-light white--text text-center">
+              <v-icon color="white" class="mr-5">mdi-clipboard-list-outline</v-icon> My Proposals
+            </v-list-item-title>
+          </v-list-item>
+          <v-list-item class="white--text" to="/feed">
+            <v-list-item-title class="text-subtitle-1 font-weight-light white--text text-center">
+              <v-icon color="white" class="mr-5">mdi-comment-quote-outline</v-icon> Feed
+            </v-list-item-title>
+          </v-list-item>
+        </template>
         <template v-if="$store.state.currentUser === null">
+          <v-list-item v-for="(item, i) in links" class="white--text" :key="i" :to="item.to">
+            <v-list-item-title class="text-subtitle-1 font-weight-light white--text text-center">
+              <v-icon color="white" class="mr-5">{{ item.icon }}</v-icon> {{ item.title }}
+            </v-list-item-title>
+          </v-list-item>
           <v-list-item class="white--text" to="/login">
             <v-list-item-title class="text-subtitle-1 font-weight-light white--text text-center">
               <v-icon color="white" class="mr-5">mdi-login</v-icon> Login
@@ -75,51 +79,57 @@
           </v-col>
 
           <v-col v-if="!$vuetify.breakpoint.smAndDown" class="pa-0 col-auto">
-            <v-btn
-              v-for="(link, i) in links"
-              :key="i"
-              text
-              tile
-              class="text-h5"
-              height="70"
-              width="120"
-              color="white"
-              :to="link.to"
+            <template v-if="$store.state.currentUser === null">
+              <v-btn
+                v-for="(link, i) in links"
+                :key="i"
+                text
+                tile
+                class="text-h5"
+                height="70"
+                width="120"
+                color="white"
+                :to="link.to"
+              >
+                {{ link.title }}
+              </v-btn>
+            </template>
+            <template
+              v-if="$store.state.currentUser && $store.state.currentUser.type === 'freelancer'"
             >
-              {{ link.title }}
-            </v-btn>
-            <v-btn
-              v-if="type == 'freelancer'"
-              text
-              tile
-              class="text-h5"
-              height="70"
-              width="120"
-              color="white"
-              to="/myproposals"
-            >
-              My Proposals
-            </v-btn>
+              <v-btn text tile class="text-h5" height="70" width="120" color="white" to="/feed">
+                Feed
+              </v-btn>
+              <v-btn
+                text
+                tile
+                class="text-h5"
+                height="70"
+                width="150"
+                color="white"
+                to="/myproposals"
+              >
+                My Proposals
+              </v-btn>
+            </template>
+            <template v-if="$store.state.currentUser && $store.state.currentUser.type === 'client'">
+              <v-btn text tile class="text-h5" height="70" width="120" color="white" to="/feed">
+                Feed
+              </v-btn>
+              <v-btn
+                text
+                tile
+                class="text-h5"
+                height="70"
+                width="150"
+                color="white"
+                to="/createjob"
+              >
+                Create Job
+              </v-btn>
+            </template>
           </v-col>
 
-          <!-- <v-col
-            :class="{
-              'col-auto': $vuetify.breakpoint.mdAndUp,
-              'col-4': $vuetify.breakpoint.smAndDown,
-              'col-6': $vuetify.breakpoint.xs,
-              'pa-1': $vuetify.breakpoint.smAndDown,
-            }"
-          >
-            <v-responsive max-width="260">
-              <v-text-field
-                append-icon="mdi-magnify"
-                flat
-                hide-details
-                background-color="white"
-                rounded
-              ></v-text-field>
-            </v-responsive>
-          </v-col> -->
           <!-- Register Button & and User menu-->
           <v-col
             cols="auto"
@@ -182,18 +192,7 @@ export default {
         to: '/',
         icon: 'mdi-home',
       },
-      {
-        title: 'Admin',
-        to: '/admin',
-        icon: 'mdi-cog-outline',
-      },
-      {
-        title: 'Feed',
-        to: '/feed',
-        icon: 'mdi-comment-quote-outline',
-      },
     ],
-    type: '',
     drawer: false,
   }),
   methods: {
@@ -206,25 +205,8 @@ export default {
       }
     },
   },
-  mounted() {
-    this.type = JSON.parse(localStorage.getItem('userData')).type;
-  },
   created() {
     this.$store.state.currentUser = JSON.parse(localStorage.getItem('userData'));
-  },
-  computed: {
-    typeUser() {
-      return this.$store.state.currentUser;
-    },
-  },
-  watch: {
-    typeUser() {
-      if (this.$store.state.currentUser) {
-        this.type = this.$store.state.currentUser.type;
-      } else {
-        this.type = '';
-      }
-    },
   },
 };
 </script>

@@ -75,9 +75,19 @@ const routes = [
       },
       // Pages
       {
-        name: 'User Profile',
-        path: 'pages/user',
-        component: () => import('@/views/dashboard/pages/UserProfile'),
+        name: 'Users',
+        path: 'users',
+        component: () => import('@/views/dashboard/pages/Users'),
+      },
+      {
+        name: 'Jobs',
+        path: 'jobs',
+        component: () => import('@/views/dashboard/pages/Jobs'),
+      },
+      {
+        name: 'Categories & Skills',
+        path: 'categories_skills',
+        component: () => import('@/views/dashboard/pages/Categories_Skills'),
       },
     ],
   },

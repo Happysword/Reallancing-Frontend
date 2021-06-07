@@ -431,14 +431,16 @@ export default {
       'Wordpress Developer',
     ],
   }),
-  created() {},
-  // beforeRouteEnter(to, from, next) {
-  //   if (localStorage.getItem('userData')) {
-  //     next({ name: 'feed' });
-  //   } else {
-  //     next();
-  //   }
-  // },
+  beforeRouteEnter(to, from, next) {
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    if (userData == null) {
+      next();
+    } else if (userData.type === 'admin') {
+      next('/admin');
+    } else {
+      next('/feed');
+    }
+  },
 };
 </script>
 

@@ -126,7 +126,7 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     if (!localStorage.getItem('userData')) {
-      next({ name: 'register' });
+      next({ name: 'login' });
     } else {
       next();
     }

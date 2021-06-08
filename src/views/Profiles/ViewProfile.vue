@@ -1,6 +1,7 @@
 <template>
   <div>
-    <v-container>
+    <Loading v-if="loading == false"></Loading>
+    <v-container v-if="loading == true">
       <v-row>
         <v-col cols="12" md="12" sm="12">
           <v-card color="secondbackground">
@@ -170,11 +171,13 @@
 </template>
 
 <script>
+import Loading from '../../components/Loading.vue';
 import api from '../../api/index';
 
 export default {
   data() {
     return {
+      loading: false,
       user: {
         rating: 1.4,
         _id: '609c5048c6393d1f08471138',
@@ -218,7 +221,9 @@ export default {
       currUser: JSON.parse(localStorage.getItem('userData')),
     };
   },
+  components: { Loading },
   mounted() {
+    this.loading = false;
     this.fetchUser();
   },
   methods: {
@@ -226,6 +231,7 @@ export default {
       api.fetchUserProfile(this.$route.params.id).then((response) => {
         console.log(response.data);
         this.user = response.data;
+        this.loading = true;
       });
     },
   },

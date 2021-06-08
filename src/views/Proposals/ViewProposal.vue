@@ -1,6 +1,7 @@
 <template>
   <div>
-    <v-container>
+    <Loading v-if="loading == false"></Loading>
+    <v-container v-if="loading == true">
       <v-row
         class="ma-2 pt-3 display-1 primary--text"
         color="primary"
@@ -128,7 +129,11 @@
               <v-col cols="12" md="9" sm="7" class="px-0">
                 <div class="px-5">
                   <v-row class="pt-3 px-3">
-                    <v-row v-if="proposal.status === 'Pending' && type === 'freelancer'">
+                    <v-row
+                      v-if="
+                        proposal.status === 'Pending' && type === 'freelancer'
+                      "
+                    >
                       <v-col>
                         <p class="headline pt-1">Proposal Details</p>
                       </v-col>
@@ -139,7 +144,11 @@
                         <v-icon color="orange">mdi-circle</v-icon>
                       </v-col>
                     </v-row>
-                    <v-row v-if="proposal.status === 'Accepted' && type === 'freelancer'">
+                    <v-row
+                      v-if="
+                        proposal.status === 'Accepted' && type === 'freelancer'
+                      "
+                    >
                       <v-col>
                         <p class="headline pt-1">Proposal Details</p>
                       </v-col>
@@ -174,16 +183,20 @@
 </template>
 
 <script>
+import Loading from '../../components/Loading.vue';
 import api from '../../api/index';
 
 export default {
   data() {
     return {
       proposal: {},
+      loading: false,
       type: '',
     };
   },
+  components: { Loading },
   mounted() {
+    this.loading = false;
     this.type = JSON.parse(localStorage.getItem('userData')).type;
     this.fetchProposal();
   },
@@ -196,6 +209,7 @@ export default {
       api.fetchProposal(this.$route.params.id).then((response) => {
         console.log(response.data);
         this.proposal = response.data;
+        this.loading = true;
       });
     },
     deleteProposal() {

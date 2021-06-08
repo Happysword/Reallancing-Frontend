@@ -2,10 +2,7 @@
   <v-container id="EditProfile_root">
     <v-row align="center" justify="center">
       <v-col cols="8">
-        <p
-          id="title"
-          class="spotify-green headline pt-6 pl-3 mb-12 d-none d-sm-flex"
-        >
+        <p id="title" class="spotify-green headline pt-6 pl-3 mb-12 d-none d-sm-flex">
           Edit profile
         </p>
 
@@ -40,10 +37,7 @@
               outlined
               label="Name"
               v-model="userInput.name"
-              :rules="[
-                validation.noSpecialCharacters('Name', true),
-                validation.validName(true),
-              ]"
+              :rules="[validation.noSpecialCharacters('Name', true), validation.validName(true)]"
             />
 
             <!-- Gender -->
@@ -118,14 +112,7 @@
               <router-link to="/account/overview">
                 <v-btn id="cancelBtn" class="mr-4" text rounded> Cancel </v-btn>
               </router-link>
-              <v-btn
-                id="saveBtn"
-                class="mr-4"
-                color="#1DB954"
-                rounded
-                dark
-                @click="submit"
-              >
+              <v-btn id="saveBtn" class="mr-4" color="#1DB954" rounded dark @click="submit">
                 Save Profile
               </v-btn>
             </v-row>
@@ -163,7 +150,7 @@ export default {
 
     /* istanbul ignore if */
     if (data.userInfo) {
-      Object.keys(data.userInfo).forEach((key) => {
+      Object.keys(data.userInfo).forEach(key => {
         data[key] = data.userInfo[key];
       });
     }
@@ -241,7 +228,7 @@ export default {
        * @param  {Object} dob The object containing the Date of birth
        * @return {String}     The formatted Date of Birth
        */
-      const formatDob = (dob) => {
+      const formatDob = dob => {
         let { day } = dob;
 
         if (parseInt(day, 10) < 10) {
@@ -253,14 +240,10 @@ export default {
 
       // Collect edited data
       const editedData = {};
-      Object.keys(this.userInput).forEach((key) => {
+      Object.keys(this.userInput).forEach(key => {
         if (this.userInput[key] !== '' && this.userInput[key] !== 'incorrect') {
           if (key === 'dob') {
-            if (
-              this.userInput[key].day &&
-              this.userInput[key].month &&
-              this.userInput[key].year
-            ) {
+            if (this.userInput[key].day && this.userInput[key].month && this.userInput[key].year) {
               editedData.birthdate = formatDob(this.userInput[key]);
             }
           } else {
@@ -274,10 +257,7 @@ export default {
       if (this.userInput.avatar) {
         const fdata = new FormData();
         fdata.append('image', this.userInput.avatar);
-        const avatarRes = await api.updateAvatar(fdata);
-        if (avatarRes.status !== 202) {
-          console.log(avatarRes.data);
-        }
+        await api.updateAvatar(fdata);
       }
 
       // Send the request
@@ -293,7 +273,7 @@ export default {
         currentUser.data = userProfile;
         /* istanbul ignore if */
         if (currentUser.data.userInfo) {
-          Object.keys(currentUser.data.userInfo).forEach((key) => {
+          Object.keys(currentUser.data.userInfo).forEach(key => {
             currentUser.data[key] = currentUser.data.userInfo[key];
           });
         }

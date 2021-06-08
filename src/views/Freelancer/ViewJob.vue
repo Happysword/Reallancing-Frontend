@@ -192,18 +192,16 @@ export default {
   methods: {
     fetchJob() {
       api.fetchJob(this.$route.params.id).then((response) => {
-        console.log(response.data);
         this.job = response.data;
         this.loading = true;
       });
     },
     deleteJob() {
-      api.DeleteAJob(this.$route.params.id).then((res) => {
+      api.DeleteAJob(this.$route.params.id).then(() => {
         this.$router.push('/feed');
         this.$store.state.snackbarMessage = 'Job Deleted';
         this.$store.state.snackbar = true;
         this.$store.state.snackbarColor = 'red';
-        console.log(res);
       });
     },
   },

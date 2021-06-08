@@ -206,7 +206,6 @@ export default {
   methods: {
     fetchUser() {
       api.fetchUserProfile(this.$route.params.id).then(response => {
-        console.log(response.data);
         this.user = response.data;
         this.loading = true;
       });

@@ -176,19 +176,17 @@ export default {
     },
     fetchProposal() {
       api.fetchProposal(this.$route.params.id).then(response => {
-        console.log(response.data);
         this.proposal = response.data;
         this.loading = true;
       });
     },
     deleteProposal() {
       // eslint-disable-next-line no-underscore-dangle
-      api.DeleteAProposal(this.proposal._id).then(res => {
+      api.DeleteAProposal(this.proposal._id).then(() => {
         this.$router.go(-1);
         this.$store.state.snackbarMessage = 'Proposal Deleted';
         this.$store.state.snackbar = true;
         this.$store.state.snackbarColor = 'red';
-        console.log(res);
       });
     },
     sendProposalAcceptance() {

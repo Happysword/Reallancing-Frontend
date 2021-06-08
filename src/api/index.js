@@ -262,6 +262,32 @@ export default {
       .catch(() => false);
   },
 
+  // Delete Requests
+
+  async deleteUser(userid) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem('userToken'))}`,
+      },
+    };
+    return axios
+      .delete(`${baseURL}/api/v1/users/${userid}`, config)
+      .then(response => response.data)
+      .catch(() => false);
+  },
+
+  async deleteJob(jobid) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem('userToken'))}`,
+      },
+    };
+    return axios
+      .delete(`${baseURL}/api/v1/jobs/${jobid}`, config)
+      .then(response => response.data)
+      .catch(() => false);
+  },
+
   // Statistics
   async getUsersStats() {
     const config = {

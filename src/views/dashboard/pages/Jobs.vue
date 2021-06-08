@@ -11,9 +11,36 @@
             <div class="text-subtitle-1 font-weight-light">
               Created Jobs by Our Clients
             </div>
+            <v-text-field
+              v-model="search"
+              append-icon="mdi-magnify"
+              label="Search"
+              single-line
+              hide-details
+            ></v-text-field>
+            <div class="text-center">
+              <v-btn
+                color="red darken-2"
+                rounded
+                class="mt-5"
+                :disabled="selectedData.length === 0"
+                @click="deleteData"
+              >
+                Delete</v-btn
+              >
+            </div>
           </template>
           <v-card-text>
-            <v-data-table :headers="headers" :items="items" />
+            <v-data-table
+              :headers="headers"
+              :items="items"
+              :search="search"
+              :loading="items.length === 0"
+              show-select
+              item-key="_id"
+              v-model="selectedData"
+              :single-select="true"
+            />
           </v-card-text>
         </base-material-card>
       </v-col>
@@ -33,6 +60,7 @@ export default {
 
   data() {
     return {
+      search: '',
       headers: [
         {
           sortable: true,
@@ -56,6 +84,7 @@ export default {
         },
       ],
       items: [],
+      selectedData: [],
     };
   },
 
@@ -63,16 +92,31 @@ export default {
     complete(index) {
       this.list[index] = !this.list[index];
     },
+    async deleteData() {
+      // Set items to empty to create load UI
+      this.items = [];
+
+      // Delete the Selected Data
+      // eslint-disable-next-line no-underscore-dangle
+      await api.deleteJob(this.selectedData[0]._id);
+      this.selectedData = [];
+
+      // Read the Data Again
+      await this.getJobs();
+    },
+    async getJobs() {
+      const AllJobs = await api.getJobs();
+      if (AllJobs.status === 'success') {
+        this.items = AllJobs.data.map(obj => ({
+          date: obj.createdAt.substr(0, obj.createdAt.indexOf('T')),
+          ...obj,
+        }));
+      }
+    },
   },
 
   async mounted() {
-    const AllJobs = await api.getJobs();
-    if (AllJobs.status === 'success') {
-      this.items = AllJobs.data.map(obj => ({
-        date: obj.createdAt.substr(0, obj.createdAt.indexOf('T')),
-        ...obj,
-      }));
-    }
+    await this.getJobs();
   },
 };
 </script>

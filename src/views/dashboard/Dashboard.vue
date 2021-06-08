@@ -1,6 +1,7 @@
 <template>
   <v-container id="dashboard" fluid tag="section">
-    <v-row>
+    <Loading v-if="loading" />
+    <v-row v-else>
       <v-col cols="12" lg="4">
         <base-material-chart-card
           :data="emailsSubscriptionChart.data"
@@ -35,11 +36,11 @@
           </template>
 
           <h4 class="card-title font-weight-light mt-2 ml-2">
-            Website Views
+            Freelancer Types
           </h4>
 
           <p class="d-inline-flex font-weight-light ml-2 mt-1">
-            Last Campaign Performance
+            Freelancers Different levels of Experience
           </p>
 
           <!-- <template v-slot:actions>
@@ -154,40 +155,40 @@
         </base-material-chart-card>
       </v-col>
 
-      <v-col cols="12" sm="6" lg="3">
+      <v-col cols="12" sm="6" lg="4">
         <base-material-stats-card
           color="info"
-          icon="mdi-twitter"
-          title="Followers"
-          value="+245"
-          sub-icon="mdi-clock"
-          sub-text="Just Updated"
+          icon="mdi-account-cash"
+          title="Clients"
+          :value="numberOfClients"
+          sub-icon="mdi-information-outline"
+          sub-text="Total Number of Clients"
         />
       </v-col>
 
-      <v-col cols="12" sm="6" lg="3">
+      <v-col cols="12" sm="6" lg="4">
         <base-material-stats-card
           color="primary"
-          icon="mdi-poll"
-          title="Website Visits"
-          value="75.521"
-          sub-icon="mdi-tag"
-          sub-text="Tracked from Google Analytics"
+          icon="mdi-account-clock"
+          title="Freelancers"
+          :value="numberOfFreelancers"
+          sub-icon="mdi-information-outline"
+          sub-text="Total Number of Freelancers"
         />
       </v-col>
 
-      <v-col cols="12" sm="6" lg="3">
+      <v-col cols="12" sm="6" lg="4">
         <base-material-stats-card
-          color="success"
-          icon="mdi-store"
-          title="Revenue"
-          value="$ 34,245"
-          sub-icon="mdi-calendar"
-          sub-text="Last 24 Hours"
+          color="pink"
+          icon="mdi-hammer-wrench"
+          title="Jobs"
+          :value="numberOfJobs"
+          sub-icon="mdi-information-outline"
+          sub-text="Total Number of Jobs"
         />
       </v-col>
 
-      <v-col cols="12" sm="6" lg="3">
+      <!-- <v-col cols="12" sm="6" lg="3">
         <base-material-stats-card
           color="orange"
           icon="mdi-sofa"
@@ -197,7 +198,7 @@
           sub-icon-color="red"
           sub-text="Get More Space..."
         />
-      </v-col>
+      </v-col> -->
     </v-row>
   </v-container>
 </template>
@@ -205,6 +206,7 @@
 <script>
 import baseMaterialChartCard from '@/components/base/MaterialChartCard.vue';
 import baseMaterialStatsCard from '@/components/base/MaterialStatsCard.vue';
+import Loading from '@/components/Loading.vue';
 import api from '@/api';
 
 export default {
@@ -212,6 +214,7 @@ export default {
   components: {
     baseMaterialStatsCard,
     baseMaterialChartCard,
+    Loading,
   },
 
   data() {
@@ -284,6 +287,10 @@ export default {
           ],
         ],
       },
+      numberOfFreelancers: '0',
+      numberOfClients: '0',
+      numberOfJobs: '0',
+      loading: true,
     };
   },
 
@@ -294,12 +301,26 @@ export default {
   },
   async mounted() {
     const userStats = await api.getUsersStats();
-    const FreelancerStats = await api.getFreelancerStats();
+    // const FreelancerStats = await api.getFreelancerStats();
     const JobsStats = await api.getJobsStats();
+    // const ProposalsMonthlyStats = await api.getProposalsMonthly();
+    // const JobsMonthlyStats = await api.getJobsMonthly();
+    // const UsersMonthlyStats = await api.getUsersMonthly();
 
-    console.log(userStats);
-    console.log(FreelancerStats);
-    console.log(JobsStats);
+    // Set the Data
+    userStats.data.stats.forEach(element => {
+      // eslint-disable-next-line no-underscore-dangle
+      if (element._id === 'client') {
+        this.numberOfClients = String(element.numUsers);
+        // eslint-disable-next-line no-underscore-dangle
+      } else if (element._id === 'freelancer') {
+        this.numberOfFreelancers = String(element.numUsers);
+      }
+    });
+    this.numberOfJobs = String(JobsStats.data.stats[0].numJobs);
+
+    // Remove Loading Screen
+    this.loading = false;
   },
 };
 </script>

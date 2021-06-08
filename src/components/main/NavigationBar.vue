@@ -31,6 +31,18 @@
             </v-list-item-title>
           </v-list-item>
         </template>
+        <template v-if="$store.state.currentUser && $store.state.currentUser.type === 'client'">
+          <v-list-item class="white--text" to="/createjob">
+            <v-list-item-title class="text-subtitle-1 font-weight-light white--text text-center">
+              <v-icon color="white" class="mr-5">mdi-briefcase</v-icon> Create Job
+            </v-list-item-title>
+          </v-list-item>
+          <v-list-item class="white--text" to="/feed">
+            <v-list-item-title class="text-subtitle-1 font-weight-light white--text text-center">
+              <v-icon color="white" class="mr-5">mdi-comment-quote-outline</v-icon> Feed
+            </v-list-item-title>
+          </v-list-item>
+        </template>
         <template v-if="$store.state.currentUser === null">
           <v-list-item v-for="(item, i) in links" class="white--text" :key="i" :to="item.to">
             <v-list-item-title class="text-subtitle-1 font-weight-light white--text text-center">

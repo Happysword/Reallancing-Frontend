@@ -322,4 +322,37 @@ export default {
       .then(response => response.data)
       .catch(() => false);
   },
+  async getProposalsMonthly() {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem('userToken'))}`,
+      },
+    };
+    return axios
+      .get(`${baseURL}/api/v1/proposals/monthly-plan`, config)
+      .then(response => response.data)
+      .catch(() => false);
+  },
+  async getJobsMonthly() {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem('userToken'))}`,
+      },
+    };
+    return axios
+      .get(`${baseURL}/api/v1/jobs/monthly-plan`, config)
+      .then(response => response.data)
+      .catch(() => false);
+  },
+  async getUsersMonthly() {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem('userToken'))}`,
+      },
+    };
+    return axios
+      .get(`${baseURL}/api/v1/users/monthly-plan`, config)
+      .then(response => response.data)
+      .catch(() => false);
+  },
 };

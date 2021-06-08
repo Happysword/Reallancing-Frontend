@@ -12,11 +12,11 @@
           type="Bar"
         >
           <h4 class="card-title font-weight-light mt-2 ml-2">
-            Users
+            Proposals
           </h4>
 
           <p class="d-inline-flex font-weight-light ml-2 mt-1">
-            User Registration in Months
+            Proposals in Months
           </p>
         </base-material-chart-card>
       </v-col>

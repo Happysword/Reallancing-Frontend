@@ -1,6 +1,7 @@
 <template>
   <div>
-    <v-container>
+    <Loading v-if="loading == false"></Loading>
+    <v-container v-if="loading == true">
       <h1 class="display-3 font-weight-medium ma-3">Job details</h1>
       <v-row>
         <v-col cols="12" md="8">
@@ -27,8 +28,10 @@
                         <v-icon>mdi-timer</v-icon>
                       </v-col>
                       <v-col cols="8" class="font-weight-bold">
-                        {{ job.minHourlyRate }}$-{{ job.maxHourlyRate }}$
-                        <v-card-subtitle class="ma-0 pa-0 caption">Hourly</v-card-subtitle>
+                        ${{ job.minHourlyRate }}/hr-${{ job.maxHourlyRate }}/hr
+                        <v-card-subtitle class="ma-0 pa-0 caption"
+                          >Hourly</v-card-subtitle
+                        >
                       </v-col>
                     </v-row>
                   </v-container>
@@ -41,7 +44,9 @@
                       </v-col>
                       <v-col cols="8" class="font-weight-bold">
                         {{ job.duration }}
-                        <v-card-subtitle class="ma-0 pa-0 caption">Project Length</v-card-subtitle>
+                        <v-card-subtitle class="ma-0 pa-0 caption"
+                          >Project Length</v-card-subtitle
+                        >
                       </v-col>
                     </v-row>
                   </v-container>
@@ -54,7 +59,9 @@
                       </v-col>
                       <v-col cols="8" class="font-weight-bold">
                         {{ job.experience }}
-                        <v-card-subtitle class="ma-0 pa-0 caption">Experience</v-card-subtitle>
+                        <v-card-subtitle class="ma-0 pa-0 caption"
+                          >Experience</v-card-subtitle
+                        >
                       </v-col>
                     </v-row>
                   </v-container>
@@ -63,18 +70,25 @@
             </v-container>
             <v-divider></v-divider>
             <div class="pa-4">
-              <v-card-title>
-                Skills and Expertise
-              </v-card-title>
+              <v-card-title> Skills and Expertise </v-card-title>
               <div class="pa-3">
-                <v-chip v-for="(skill, i) in job.skills" :key="i" class="ma-2">{{ skill }}</v-chip>
+                <v-chip
+                  v-for="(skill, i) in job.skills"
+                  :key="i"
+                  class="ma-2"
+                  >{{ skill }}</v-chip
+                >
               </div>
             </div>
           </v-card>
         </v-col>
         <v-col cols="6" md="4" class="hidden-sm-and-down">
           <v-card>
-            <v-container fluid fill-height v-if="!(job.owner == false && type == 'client')">
+            <v-container
+              fluid
+              fill-height
+              v-if="!(job.owner == false && type == 'client')"
+            >
               <v-row justify="center" align="center">
                 <v-col cols="8">
                   <v-btn
@@ -83,7 +97,10 @@
                     class="ma-2"
                     width="100%"
                     route
-                    :to="{ name: 'applyjob', params: { id: this.$route.params.id } }"
+                    :to="{
+                      name: 'applyjob',
+                      params: { id: this.$route.params.id },
+                    }"
                     v-if="type == 'freelancer'"
                     >Submit a Proposal</v-btn
                   >
@@ -94,7 +111,10 @@
                     width="100%"
                     route
                     v-if="type == 'client' && job.owner == true"
-                    :to="{ name: 'allproposals', params: { id: this.$route.params.id } }"
+                    :to="{
+                      name: 'allproposals',
+                      params: { id: this.$route.params.id },
+                    }"
                     >View Proposals</v-btn
                   >
                   <v-btn
@@ -138,7 +158,12 @@
         <span class="white--text">View Proposals</span>
         <v-icon class="white--text">mdi-eye</v-icon>
       </v-btn>
-      <v-btn color="error" route v-if="type == 'client' && job.owner == true" @click="deleteJob">
+      <v-btn
+        color="error"
+        route
+        v-if="type == 'client' && job.owner == true"
+        @click="deleteJob"
+      >
         <span class="white--text">Delete Job</span>
         <v-icon class="white--text">mdi-delete</v-icon>
       </v-btn>
@@ -147,6 +172,7 @@
 </template>
 
 <script>
+import Loading from '../../components/Loading.vue';
 import api from '../../api/index';
 
 export default {
@@ -154,21 +180,25 @@ export default {
     return {
       job: {},
       type: '',
+      loading: false,
     };
   },
+  components: { Loading },
   mounted() {
+    this.loading = false;
     this.type = JSON.parse(localStorage.getItem('userData')).type;
     this.fetchJob();
   },
   methods: {
     fetchJob() {
-      api.fetchJob(this.$route.params.id).then(response => {
+      api.fetchJob(this.$route.params.id).then((response) => {
         console.log(response.data);
         this.job = response.data;
+        this.loading = true;
       });
     },
     deleteJob() {
-      api.DeleteAJob(this.$route.params.id).then(res => {
+      api.DeleteAJob(this.$route.params.id).then((res) => {
         this.$router.push('/feed');
         this.$store.state.snackbarMessage = 'Job Deleted';
         this.$store.state.snackbar = true;

@@ -1,6 +1,7 @@
 <template>
   <div>
-    <v-container>
+    <Loading v-if="loading == false"></Loading>
+    <v-container v-if="loading == true">
       <v-row>
         <v-col cols="12" md="12" sm="12">
           <v-card color="secondbackground">
@@ -9,14 +10,9 @@
                 <v-col cols="12" md="8" sm="12">
                   <v-row>
                     <v-col cols="3" md="2" sm="2">
-                      <v-avatar
-                        color="primary"
-                        size="62"
-                        alignjustify="center"
-                        align="center"
-                      >
+                      <v-avatar color="primary" size="62" alignjustify="center" align="center">
                         <v-img
-                          src="https://picsum.photos/id/11/500/300"
+                          src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"
                         ></v-img>
                       </v-avatar>
                     </v-col>
@@ -29,8 +25,15 @@
                           </p>
                         </v-row>
                         <v-row class="my-0">
-                          <v-icon color="primary">mdi-star</v-icon>
-                          <div class="body-1 pr-3">{{ user.rating }}</div>
+                          <v-rating
+                            hover
+                            length="5"
+                            size="22"
+                            readonly
+                            :value="user.rating"
+                          ></v-rating>
+                        </v-row>
+                        <v-row class="my-0">
                           <v-icon color="gray">mdi-map-marker</v-icon>
                           <div class="body-1 font-weight-medium">
                             {{ user.location }}
@@ -46,13 +49,9 @@
             <v-row class="ma-0" v-if="user.type == 'freelancer'">
               <v-col cols="12" md="3" sm="5" class="pa-0">
                 <div class="px-3 pt-3">
-                  <strong class="subtitle-1 font-weight-medium"
-                    >View Profile</strong
-                  >
+                  <strong class="subtitle-1 font-weight-medium">View Profile</strong>
                   <p class="body-1 pt-1">
-                    <v-icon class="ml-2 mt-n1" color="primary"
-                      >mdi-check-outline</v-icon
-                    >
+                    <v-icon class="ml-2 mt-n1" color="primary">mdi-check-outline</v-icon>
                     All Work
                   </p>
                 </div>
@@ -60,9 +59,7 @@
                 <div class="pa-3">
                   <h3 class="display-2 font-weight-medium">Category</h3>
                   <v-chip class="ma-1 white--text" color="topbar">
-                    <span class="body-2">{{
-                      user.freelancerInfo.category
-                    }}</span>
+                    <span class="body-2">{{ user.freelancerInfo.category }}</span>
                   </v-chip>
                 </div>
                 <v-divider> </v-divider>
@@ -78,24 +75,15 @@
                 <div class="pa-3">
                   <h3 class="display-2 font-weight-medium">Experience Level</h3>
                   <v-chip class="ma-1 white--text" color="topbar">
-                    <span class="body-2">{{
-                      user.freelancerInfo.experienceLevel
-                    }}</span>
+                    <span class="body-2">{{ user.freelancerInfo.experienceLevel }}</span>
                   </v-chip>
                 </div>
                 <v-divider> </v-divider>
-                <div
-                  class="pa-3"
-                  v-if="user.freelancerInfo.languages != undefined"
-                >
+                <div class="pa-3" v-if="user.freelancerInfo.languages != undefined">
                   <h3 class="display-2 font-weight-medium">Languages</h3>
-                  <template
-                    v-for="(language, i) in user.freelancerInfo.languages"
-                  >
+                  <template v-for="(language, i) in user.freelancerInfo.languages">
                     <v-chip :key="i" class="ma-1 white--text" color="topbar">
-                      <span class="body-2"
-                        >{{ language.name }} | {{ language.level }}</span
-                      >
+                      <span class="body-2">{{ language.name }} | {{ language.level }}</span>
                     </v-chip>
                   </template>
                 </div>
@@ -118,10 +106,7 @@
                   </li>
                 </div>
                 <v-divider class="mx-0"> </v-divider>
-                <div
-                  class="pa-3"
-                  v-if="user.freelancerInfo.education != undefined"
-                >
+                <div class="pa-3" v-if="user.freelancerInfo.education != undefined">
                   <h2 class="display-3 pa-3">Education</h2>
                   <div>
                     <ul class="headline px-8 pb-2 font-weight-medium">
@@ -136,23 +121,16 @@
                   </div>
                 </div>
                 <v-divider class="mx-0"> </v-divider>
-                <div
-                  class="pa-3"
-                  v-if="user.freelancerInfo.workExperience != undefined"
-                >
+                <div class="pa-3" v-if="user.freelancerInfo.workExperience != undefined">
                   <h2 class="display-3 pa-3">Work History</h2>
-                  <template
-                    v-for="(work, i) in user.freelancerInfo.workExperience"
-                  >
+                  <template v-for="(work, i) in user.freelancerInfo.workExperience">
                     <div :key="i">
                       <ul class="headline px-8 pb-2 font-weight-medium">
                         {{
                           work.jobTitle
                         }}
                       </ul>
-                      <li class="display-1 px-8">
-                        <strong>Company: </strong> {{ work.company }}
-                      </li>
+                      <li class="display-1 px-8"><strong>Company: </strong> {{ work.company }}</li>
                       <li class="display-1 px-8">
                         <strong>Duration: </strong>
                         {{ work.durationInMonths }} months
@@ -170,11 +148,13 @@
 </template>
 
 <script>
+import Loading from '../../components/Loading.vue';
 import api from '../../api/index';
 
 export default {
   data() {
     return {
+      loading: false,
       user: {
         rating: 1.4,
         _id: '609c5048c6393d1f08471138',
@@ -218,14 +198,17 @@ export default {
       currUser: JSON.parse(localStorage.getItem('userData')),
     };
   },
+  components: { Loading },
   mounted() {
+    this.loading = false;
     this.fetchUser();
   },
   methods: {
     fetchUser() {
-      api.fetchUserProfile(this.$route.params.id).then((response) => {
+      api.fetchUserProfile(this.$route.params.id).then(response => {
         console.log(response.data);
         this.user = response.data;
+        this.loading = true;
       });
     },
   },

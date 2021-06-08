@@ -22,8 +22,10 @@
                 <v-icon>mdi-timer</v-icon>
               </v-col>
               <v-col cols="8" class="font-weight-bold">
-                {{ minHourlyRate }}LE-{{ maxHourlyRate }}LE
-                <v-card-subtitle class="ma-0 pa-0 caption">Hourly</v-card-subtitle>
+                ${{ minHourlyRate }}/hr-${{ maxHourlyRate }}/hr
+                <v-card-subtitle class="ma-0 pa-0 caption"
+                  >Hourly</v-card-subtitle
+                >
               </v-col>
             </v-row>
           </v-container>
@@ -36,7 +38,9 @@
               </v-col>
               <v-col cols="8" class="font-weight-bold">
                 {{ duration }}
-                <v-card-subtitle class="ma-0 pa-0 caption">Project Length</v-card-subtitle>
+                <v-card-subtitle class="ma-0 pa-0 caption"
+                  >Project Length</v-card-subtitle
+                >
               </v-col>
             </v-row>
           </v-container>
@@ -49,7 +53,9 @@
               </v-col>
               <v-col cols="8" class="font-weight-bold">
                 {{ experience }}
-                <v-card-subtitle class="ma-0 pa-0 caption">Experience</v-card-subtitle>
+                <v-card-subtitle class="ma-0 pa-0 caption"
+                  >Experience</v-card-subtitle
+                >
               </v-col>
             </v-row>
           </v-container>
@@ -58,11 +64,11 @@
     </v-container>
     <v-divider></v-divider>
     <div class="pa-4">
-      <v-card-title>
-        Skills and Expertise
-      </v-card-title>
+      <v-card-title> Skills and Expertise </v-card-title>
       <div class="pa-3">
-        <v-chip v-for="(skill, i) in skills" :key="i" class="ma-2">{{ skill }}</v-chip>
+        <v-chip v-for="(skill, i) in skills" :key="i" class="ma-2">{{
+          skill
+        }}</v-chip>
       </div>
     </div>
   </v-card>

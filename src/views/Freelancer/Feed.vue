@@ -1,6 +1,7 @@
 <template>
   <div>
-    <v-container>
+    <Loading v-if="loading == false"></Loading>
+    <v-container v-if="loading == true">
       <v-row>
         <v-col cols="4">
           <h1
@@ -15,10 +16,16 @@
           >
             Find Work
           </h1>
-          <h1 class="display-3 font-weight-medium my-3 hidden-sm-and-down" v-if="type == 'client'">
+          <h1
+            class="display-3 font-weight-medium my-3 hidden-sm-and-down"
+            v-if="type == 'client'"
+          >
             My Jobs
           </h1>
-          <h1 class="display-2 font-weight-medium my-5 hidden-md-and-up" v-if="type == 'client'">
+          <h1
+            class="display-2 font-weight-medium my-5 hidden-md-and-up"
+            v-if="type == 'client'"
+          >
             My Jobs
           </h1>
         </v-col>
@@ -45,9 +52,7 @@
           v-if="type == 'client'"
         >
           Create A New Job
-          <v-icon right dark>
-            mdi-plus-box
-          </v-icon>
+          <v-icon right dark> mdi-plus-box </v-icon>
         </v-btn>
       </v-row>
       <div v-if="jobs.length">
@@ -68,13 +73,14 @@
       <div class="text-center" v-else>
         <h1 class="display-4 font-weight-medium my-10">No Jobs Found</h1>
       </div>
-      <v-pagination v-model="page" :length="5"></v-pagination>
+      <v-pagination v-model="page" :length="50"></v-pagination>
     </v-container>
   </div>
 </template>
 
 <script>
 import JobCard from '../../components/job/JobCard.vue';
+import Loading from '../../components/Loading.vue';
 import api from '../../api/index';
 
 export default {
@@ -84,9 +90,10 @@ export default {
       jobs: [],
       page: 1,
       type: '',
+      loading: false,
     };
   },
-  components: { JobCard },
+  components: { JobCard, Loading },
   watch: {
     searchText() {
       if (this.searchText) {
@@ -100,6 +107,7 @@ export default {
     },
   },
   mounted() {
+    this.loading = false;
     this.type = JSON.parse(localStorage.getItem('userData')).type;
     if (this.type === 'freelancer') {
       this.fetchAllJobs();
@@ -109,18 +117,21 @@ export default {
   },
   methods: {
     fetchAllJobs(page) {
-      api.fetchAllJobs(page).then(response => {
+      api.fetchAllJobs(page).then((response) => {
         this.jobs = response.data;
+        this.loading = true;
       });
     },
     fetchCurrentUserJobs() {
-      api.fetchCurrentUserJobs().then(response => {
+      api.fetchCurrentUserJobs().then((response) => {
         this.jobs = response.data;
+        this.loading = true;
       });
     },
     searchAJob(jobName) {
-      api.searchAJob(jobName).then(response => {
+      api.searchAJob(jobName).then((response) => {
         this.jobs = response.data;
+        this.loading = true;
       });
     },
   },

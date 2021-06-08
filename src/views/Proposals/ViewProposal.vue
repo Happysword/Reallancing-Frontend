@@ -1,10 +1,7 @@
 <template>
   <div>
     <v-container>
-      <v-row
-        class="ma-2 pt-3 display-1 primary--text"
-        color="primary"
-        @click="returnBack"
+      <v-row class="ma-2 pt-3 display-1 primary--text" color="primary" @click="returnBack"
         ><a>
           <v-icon color="primary">mdi-keyboard-backspace</v-icon>
           <span class="text-decoration-underline">View all Proposals</span>
@@ -18,15 +15,8 @@
                 <v-col cols="12" md="8" sm="12">
                   <v-row>
                     <v-col cols="3" md="2" sm="2">
-                      <v-avatar
-                        color="primary"
-                        size="62"
-                        alignjustify="center"
-                        align="center"
-                      >
-                        <v-img
-                          src="https://picsum.photos/id/11/500/300"
-                        ></v-img>
+                      <v-avatar color="primary" size="62" alignjustify="center" align="center">
+                        <v-img src="https://picsum.photos/id/11/500/300"></v-img>
                       </v-avatar>
                     </v-col>
                     <v-col cols="9" md="10" sm="10">
@@ -38,34 +28,23 @@
                           </p>
                         </v-row>
                         <v-row class="my-0">
-                          <v-icon color="primary">mdi-star</v-icon>
-                          <div class="body-1 px-1">
-                            {{ proposal.user.rating }}
-                          </div>
+                          <v-rating
+                            hover
+                            length="5"
+                            size="22"
+                            readonly
+                            :value="proposal.user.rating"
+                          ></v-rating>
                         </v-row>
                         <v-row class="px-1 my-1">
                           <!-- need to replace the route -->
-                          <a :href="`/profiles/${proposal.user._id}`"
-                            >View Profile</a
-                          >
+                          <a :href="`/profiles/${proposal.user._id}`">View Profile</a>
                         </v-row>
                       </div>
                     </v-col>
                   </v-row>
                 </v-col>
                 <v-spacer></v-spacer>
-                <v-col cols="12" md="2" sm="12" xs="12">
-                  <v-btn
-                    rounded
-                    color="white"
-                    class="ma-2"
-                    width="100%"
-                    id="whitebtn"
-                    v-if="type == 'client'"
-                  >
-                    Decline Candidate
-                  </v-btn>
-                </v-col>
                 <v-col cols="12" md="2" sm="12">
                   <v-btn
                     rounded
@@ -99,20 +78,16 @@
                   <strong class="subtitle-1">Applicant</strong>
                   <br />
                   <span class="body-1 font-weight-light">
-                    {{ proposal.user.firstName }} has applied to or been invited
-                    to your or your company's job {{ proposal.job.headline }}
+                    {{ proposal.user.firstName }} has applied to or been invited to your or your
+                    company's job {{ proposal.job.headline }}
                   </span>
                 </div>
                 <v-divider> </v-divider>
                 <div class="pa-3">
                   <h3 class="display-2 font-weight-medium">How they match</h3>
                   <div class="pt-1">
-                    <v-icon color="primary" class="mr-2"
-                      >mdi-check-circle</v-icon
-                    >
-                    <span class="body-1 font-weight-light"
-                      >Worked on jobs like yours</span
-                    >
+                    <v-icon color="primary" class="mr-2">mdi-check-circle</v-icon>
+                    <span class="body-1 font-weight-light">Worked on jobs like yours</span>
                   </div>
                 </div>
                 <!-- <v-divider> </v-divider>
@@ -193,14 +168,14 @@ export default {
       this.$router.go(-1);
     },
     fetchProposal() {
-      api.fetchProposal(this.$route.params.id).then((response) => {
+      api.fetchProposal(this.$route.params.id).then(response => {
         console.log(response.data);
         this.proposal = response.data;
       });
     },
     deleteProposal() {
       // eslint-disable-next-line no-underscore-dangle
-      api.DeleteAProposal(this.proposal._id).then((res) => {
+      api.DeleteAProposal(this.proposal._id).then(res => {
         this.$router.go(-1);
         this.$store.state.snackbarMessage = 'Proposal Deleted';
         this.$store.state.snackbar = true;

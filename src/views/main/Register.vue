@@ -377,7 +377,7 @@
                   </template>
                   <v-radio value="beginner" label="Beginner"> </v-radio>
                   <v-radio value="intermediate" label="Intermediate"> </v-radio>
-                  <v-radio value="Expert" label="Expert"> </v-radio>
+                  <v-radio value="expert" label="Expert"> </v-radio>
                 </v-radio-group>
               </v-col>
 

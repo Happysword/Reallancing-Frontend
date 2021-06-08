@@ -31,7 +31,7 @@ export default {
       },
     };
     return axios
-      .get(`${baseURL}/api/v1/jobs?page=${page}`, config)
+      .get(`${baseURL}/api/v1/jobs?page=${page}&limit=5`, config)
       .then(response => response.data)
       .catch(() => false);
   },

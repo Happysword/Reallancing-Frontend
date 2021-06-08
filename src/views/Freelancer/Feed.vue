@@ -73,7 +73,7 @@
       <div class="text-center" v-else>
         <h1 class="display-4 font-weight-medium my-10">No Jobs Found</h1>
       </div>
-      <v-pagination v-model="page" :length="5"></v-pagination>
+      <v-pagination v-model="page" :length="50"></v-pagination>
     </v-container>
   </div>
 </template>

@@ -39,10 +39,13 @@
                           </p>
                         </v-row>
                         <v-row class="my-0">
-                          <v-icon color="primary">mdi-star</v-icon>
-                          <div class="body-1 px-1">
-                            {{ proposal.user.rating }}
-                          </div>
+                          <v-rating
+                            hover
+                            length="5"
+                            size="22"
+                            readonly
+                            :value="proposal.user.rating"
+                          ></v-rating>
                         </v-row>
                         <v-row class="px-1 my-1">
                           <!-- need to replace the route -->
@@ -55,18 +58,6 @@
                   </v-row>
                 </v-col>
                 <v-spacer></v-spacer>
-                <v-col cols="12" md="2" sm="12" xs="12">
-                  <v-btn
-                    rounded
-                    color="white"
-                    class="ma-2"
-                    width="100%"
-                    id="whitebtn"
-                    v-if="type == 'client'"
-                  >
-                    Decline Candidate
-                  </v-btn>
-                </v-col>
                 <v-col cols="12" md="2" sm="12">
                   <v-btn
                     rounded

@@ -18,10 +18,17 @@
                   </p>
                 </v-row>
                 <v-row class="my-0">
-                  <v-icon color="primary">mdi-star</v-icon>
-                  <div class="body-1 px-1">
-                    {{ proposal.user.rating }}
-                  </div>
+                  <!-- <v-icon color="primary">mdi-star</v-icon> -->
+                  <!-- <div class="body-1 px-1"> -->
+                  <!-- {{ proposal.user.rating }} -->
+                  <v-rating
+                    hover
+                    length="5"
+                    size="22"
+                    readonly
+                    :value="proposal.user.rating"
+                  ></v-rating>
+                  <!-- </div> -->
                 </v-row>
                 <v-row class="px-1 my-1">
                   <!-- need to replace the route -->

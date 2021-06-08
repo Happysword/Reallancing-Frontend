@@ -30,8 +30,15 @@
                           </p>
                         </v-row>
                         <v-row class="my-0">
-                          <v-icon color="primary">mdi-star</v-icon>
-                          <div class="body-1 pr-3">{{ user.rating }}</div>
+                          <v-rating
+                            hover
+                            length="5"
+                            size="22"
+                            readonly
+                            :value="user.rating"
+                          ></v-rating>
+                        </v-row>
+                        <v-row class="my-0">
                           <v-icon color="gray">mdi-map-marker</v-icon>
                           <div class="body-1 font-weight-medium">
                             {{ user.location }}

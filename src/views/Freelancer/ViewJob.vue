@@ -28,7 +28,7 @@
                         <v-icon>mdi-timer</v-icon>
                       </v-col>
                       <v-col cols="8" class="font-weight-bold">
-                        {{ job.minHourlyRate }}$-{{ job.maxHourlyRate }}$
+                        ${{ job.minHourlyRate }}/hr-${{ job.maxHourlyRate }}/hr
                         <v-card-subtitle class="ma-0 pa-0 caption"
                           >Hourly</v-card-subtitle
                         >

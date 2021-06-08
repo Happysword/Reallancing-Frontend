@@ -2,10 +2,7 @@
   <div>
     <Loading v-if="loading == false"></Loading>
     <v-container v-if="loading == true">
-      <v-row
-        class="ma-2 pt-3 display-1 primary--text"
-        color="primary"
-        @click="returnBack"
+      <v-row class="ma-2 pt-3 display-1 primary--text" color="primary" @click="returnBack"
         ><a>
           <v-icon color="primary">mdi-keyboard-backspace</v-icon>
           <span class="text-decoration-underline">View all Proposals</span>
@@ -19,14 +16,9 @@
                 <v-col cols="12" md="8" sm="12">
                   <v-row>
                     <v-col cols="3" md="2" sm="2">
-                      <v-avatar
-                        color="primary"
-                        size="62"
-                        alignjustify="center"
-                        align="center"
-                      >
+                      <v-avatar color="primary" size="62" alignjustify="center" align="center">
                         <v-img
-                          src="https://picsum.photos/id/11/500/300"
+                          src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"
                         ></v-img>
                       </v-avatar>
                     </v-col>
@@ -49,9 +41,7 @@
                         </v-row>
                         <v-row class="px-1 my-1">
                           <!-- need to replace the route -->
-                          <a :href="`/profiles/${proposal.user._id}`"
-                            >View Profile</a
-                          >
+                          <a :href="`/profiles/${proposal.user._id}`">View Profile</a>
                         </v-row>
                       </div>
                     </v-col>
@@ -91,20 +81,16 @@
                   <strong class="subtitle-1">Applicant</strong>
                   <br />
                   <span class="body-1 font-weight-light">
-                    {{ proposal.user.firstName }} has applied to or been invited
-                    to your or your company's job {{ proposal.job.headline }}
+                    {{ proposal.user.firstName }} has applied to or been invited to your or your
+                    company's job {{ proposal.job.headline }}
                   </span>
                 </div>
                 <v-divider> </v-divider>
                 <div class="pa-3">
                   <h3 class="display-2 font-weight-medium">How they match</h3>
                   <div class="pt-1">
-                    <v-icon color="primary" class="mr-2"
-                      >mdi-check-circle</v-icon
-                    >
-                    <span class="body-1 font-weight-light"
-                      >Worked on jobs like yours</span
-                    >
+                    <v-icon color="primary" class="mr-2">mdi-check-circle</v-icon>
+                    <span class="body-1 font-weight-light">Worked on jobs like yours</span>
                   </div>
                 </div>
                 <!-- <v-divider> </v-divider>
@@ -120,11 +106,7 @@
               <v-col cols="12" md="9" sm="7" class="px-0">
                 <div class="px-5">
                   <v-row class="pt-3 px-3">
-                    <v-row
-                      v-if="
-                        proposal.status === 'Pending' && type === 'freelancer'
-                      "
-                    >
+                    <v-row v-if="proposal.status === 'Pending' && type === 'freelancer'">
                       <v-col>
                         <p class="headline pt-1">Proposal Details</p>
                       </v-col>
@@ -135,11 +117,7 @@
                         <v-icon color="orange">mdi-circle</v-icon>
                       </v-col>
                     </v-row>
-                    <v-row
-                      v-if="
-                        proposal.status === 'Accepted' && type === 'freelancer'
-                      "
-                    >
+                    <v-row v-if="proposal.status === 'Accepted' && type === 'freelancer'">
                       <v-col>
                         <p class="headline pt-1">Proposal Details</p>
                       </v-col>
@@ -197,7 +175,7 @@ export default {
       this.$router.go(-1);
     },
     fetchProposal() {
-      api.fetchProposal(this.$route.params.id).then((response) => {
+      api.fetchProposal(this.$route.params.id).then(response => {
         console.log(response.data);
         this.proposal = response.data;
         this.loading = true;
@@ -205,7 +183,7 @@ export default {
     },
     deleteProposal() {
       // eslint-disable-next-line no-underscore-dangle
-      api.DeleteAProposal(this.proposal._id).then((res) => {
+      api.DeleteAProposal(this.proposal._id).then(res => {
         this.$router.go(-1);
         this.$store.state.snackbarMessage = 'Proposal Deleted';
         this.$store.state.snackbar = true;

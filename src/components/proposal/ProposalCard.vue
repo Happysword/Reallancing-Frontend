@@ -6,7 +6,9 @@
           <v-row>
             <v-col cols="3" md="2" sm="2">
               <v-avatar color="primary" size="62" alignjustify="center" align="center">
-                <v-img src="https://picsum.photos/id/11/500/300"></v-img>
+                <v-img
+                  src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"
+                ></v-img>
               </v-avatar>
             </v-col>
             <v-col cols="9" md="10" sm="10">

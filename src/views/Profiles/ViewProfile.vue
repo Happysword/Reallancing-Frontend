@@ -43,7 +43,7 @@
               </v-container>
             </v-row>
             <v-divider> </v-divider>
-            <v-row class="ma-0">
+            <v-row class="ma-0" v-if="user.type == 'freelancer'">
               <v-col cols="12" md="3" sm="5" class="pa-0">
                 <div class="px-3 pt-3">
                   <strong class="subtitle-1 font-weight-medium"
@@ -183,27 +183,6 @@ export default {
         email: 'ali11@gmail.com',
         type: 'freelancer',
         location: 'Giza',
-        __v: 0,
-        image: [
-          {
-            colors: ['#50416b', '#c4bebb', '#9dacbb', '#905b45', '#939bac'],
-            width: 640,
-            height: 640,
-            url: 'https://reallancing-bucket.s3.amazonaws.com/photos/user-609c5048c6393d1f08471138-High.jpeg',
-          },
-          {
-            colors: ['#50416b', '#c4bebb', '#9dacbb', '#905b45', '#939bac'],
-            width: 300,
-            height: 300,
-            url: 'https://reallancing-bucket.s3.amazonaws.com/photos/user-609c5048c6393d1f08471138-Medium.jpeg',
-          },
-          {
-            colors: ['#50416b', '#c4bebb', '#9dacbb', '#905b45', '#939bac'],
-            width: 60,
-            height: 60,
-            url: 'https://reallancing-bucket.s3.amazonaws.com/photos/user-609c5048c6393d1f08471138-Low.jpeg',
-          },
-        ],
         freelancerInfo: {
           skills: ['cook', 'washing'],
           _id: '609c5049c6393d1f08471139',
@@ -249,6 +228,14 @@ export default {
         this.user = response.data;
       });
     },
+  },
+  beforeRouteEnter(to, from, next) {
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    if (userData == null) {
+      next('/');
+    } else {
+      next();
+    }
   },
 };
 </script>

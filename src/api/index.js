@@ -261,4 +261,39 @@ export default {
       .then(response => response.data)
       .catch(() => false);
   },
+
+  // Statistics
+  async getUsersStats() {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem('userToken'))}`,
+      },
+    };
+    return axios
+      .get(`${baseURL}/api/v1/users/user-stats`, config)
+      .then(response => response.data)
+      .catch(() => false);
+  },
+  async getFreelancerStats() {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem('userToken'))}`,
+      },
+    };
+    return axios
+      .get(`${baseURL}/api/v1/users/freelancer-stats`, config)
+      .then(response => response.data)
+      .catch(() => false);
+  },
+  async getJobsStats() {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem('userToken'))}`,
+      },
+    };
+    return axios
+      .get(`${baseURL}/api/v1/jobs/job-stats`, config)
+      .then(response => response.data)
+      .catch(() => false);
+  },
 };

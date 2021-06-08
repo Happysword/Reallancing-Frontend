@@ -434,11 +434,12 @@
                   outlined
                   label="Category"
                   required
-                  v-model="freelancerInfo.category"
+                  v-model="tempCategory"
                   :rules="[rules.required]"
                   :items="categriesArray"
                   clearable
                   attach
+                  return-object
                   chips
                   @change="getCategorySkills"
                 ></v-select>
@@ -568,9 +569,10 @@ export default {
       steps: ['Title & Overview', 'Education', 'Expertise', 'Category & Skills', 'Languages'],
       categriesArray: [],
       skillsArray: [],
-      currentStep: 1,
-      maxStep: 1,
-      isFreelancer: false,
+      currentStep: 4,
+      maxStep: 4,
+      isFreelancer: true,
+      tempCategory: '',
       mainData: {
         firstName: '',
         lastName: '',
@@ -743,7 +745,8 @@ export default {
       this.sendRequest = false;
     },
     async getCategorySkills() {
-      const temp = await api.getCategorySkills(this.freelancerInfo.category);
+      this.freelancerInfo.category = this.tempCategory.value;
+      const temp = await api.getCategorySkills(this.tempCategory.id);
       // eslint-disable-next-line no-underscore-dangle
       this.skillsArray = temp.data.map(obj => ({ text: obj.name, value: obj.name }));
     },
@@ -751,7 +754,7 @@ export default {
   async mounted() {
     const temp = await api.getCategories();
     // eslint-disable-next-line no-underscore-dangle
-    this.categriesArray = temp.data.map(obj => ({ text: obj.name, value: obj._id }));
+    this.categriesArray = temp.data.map(obj => ({ text: obj.name, value: obj.name, id: obj._id }));
   },
 };
 </script>

@@ -42,12 +42,12 @@
             Last Campaign Performance
           </p>
 
-          <template v-slot:actions>
+          <!-- <template v-slot:actions>
             <v-icon class="mr-1" small>
               mdi-clock-outline
             </v-icon>
             <span class="text-caption grey--text font-weight-light">updated 10 minutes ago</span>
-          </template>
+          </template> -->
         </base-material-chart-card>
       </v-col>
 
@@ -94,12 +94,12 @@
             <span class="green--text">55%</span>&nbsp; increase in today's sales
           </p>
 
-          <template v-slot:actions>
+          <!-- <template v-slot:actions>
             <v-icon class="mr-1" small>
               mdi-clock-outline
             </v-icon>
             <span class="text-caption grey--text font-weight-light">updated 4 minutes ago</span>
-          </template>
+          </template> -->
         </base-material-chart-card>
       </v-col>
 
@@ -143,14 +143,14 @@
             Last Last Campaign Performance
           </p>
 
-          <template v-slot:actions>
+          <!-- <template v-slot:actions>
             <v-icon class="mr-1" small>
               mdi-clock-outline
             </v-icon>
             <span class="text-caption grey--text font-weight-light"
               >campaign sent 26 minutes ago</span
             >
-          </template>
+          </template> -->
         </base-material-chart-card>
       </v-col>
 
@@ -205,6 +205,7 @@
 <script>
 import baseMaterialChartCard from '@/components/base/MaterialChartCard.vue';
 import baseMaterialStatsCard from '@/components/base/MaterialStatsCard.vue';
+import api from '@/api';
 
 export default {
   name: 'DashboardDashboard',
@@ -290,6 +291,15 @@ export default {
     complete(index) {
       this.list[index] = !this.list[index];
     },
+  },
+  async mounted() {
+    const userStats = await api.getUsersStats();
+    const FreelancerStats = await api.getFreelancerStats();
+    const JobsStats = await api.getJobsStats();
+
+    console.log(userStats);
+    console.log(FreelancerStats);
+    console.log(JobsStats);
   },
 };
 </script>

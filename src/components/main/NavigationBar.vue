@@ -73,27 +73,14 @@
               'mx-5': $vuetify.breakpoint.smAndDown,
             }"
           >
-            <v-avatar size="60" tile>
-              <v-img height="45" src="@/assets/logo.png"></v-img>
-            </v-avatar>
+            <router-link to="/">
+              <v-avatar size="60" tile>
+                <v-img height="45" src="@/assets/logo.png"></v-img>
+              </v-avatar>
+            </router-link>
           </v-col>
 
           <v-col v-if="!$vuetify.breakpoint.smAndDown" class="pa-0 col-auto">
-            <template v-if="$store.state.currentUser === null">
-              <v-btn
-                v-for="(link, i) in links"
-                :key="i"
-                text
-                tile
-                class="text-h5"
-                height="70"
-                width="120"
-                color="white"
-                :to="link.to"
-              >
-                {{ link.title }}
-              </v-btn>
-            </template>
             <template
               v-if="$store.state.currentUser && $store.state.currentUser.type === 'freelancer'"
             >

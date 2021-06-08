@@ -569,9 +569,9 @@ export default {
       steps: ['Title & Overview', 'Education', 'Expertise', 'Category & Skills', 'Languages'],
       categriesArray: [],
       skillsArray: [],
-      currentStep: 4,
-      maxStep: 4,
-      isFreelancer: true,
+      currentStep: 1,
+      maxStep: 1,
+      isFreelancer: false,
       tempCategory: '',
       mainData: {
         firstName: '',

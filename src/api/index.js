@@ -160,11 +160,7 @@ export default {
       },
     };
     return axios
-      .post(
-        `http://localhost:3000/api/v1/proposals/${proposalId}/sendProposalAcceptance`,
-        {},
-        config,
-      )
+      .post(`${baseURL}/api/v1/proposals/${proposalId}/sendProposalAcceptance`, {}, config)
       .then(response => response.data)
       .catch(() => false);
   },

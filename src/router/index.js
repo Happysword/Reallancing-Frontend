@@ -61,10 +61,6 @@ const routes = [
         path: '/profiles/:id',
         component: () => import('@/views/Profiles/ViewProfile.vue'),
       },
-      {
-        path: '/editprofile',
-        component: () => import('@/views/Profiles/EditProfile.vue'),
-      },
     ],
   },
   {

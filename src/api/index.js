@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-unresolved
 import axios from 'axios';
 
-const baseURL = 'http://localhost:3000';
+const baseURL = process.env.VUE_APP_API_HOST;
 
 axios.interceptors.request.use(
   config => {
@@ -161,7 +161,7 @@ export default {
     };
     return axios
       .post(
-        `http://localhost:3000/api/v1/proposals/${proposalId}/sendProposalAcceptance`,
+        `${baseURL}/api/v1/proposals/${proposalId}/sendProposalAcceptance`,
         {},
         config,
       )

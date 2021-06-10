@@ -14,7 +14,7 @@
         :color="$store.state.snackbarColor"
         elevation="24"
         v-model="$store.state.snackbar"
-        :timeout="7000"
+        :timeout="3000"
       >
         <div class="text-center text-h4">
           {{ $store.state.snackbarMessage }}

@@ -1,5 +1,4 @@
 <div align="center">
-<a href="https://github.com/AbdallahHemdan/Instahelp" rel="noopener">
   
 <img src="https://user-images.githubusercontent.com/45081989/122281055-226a6800-ceea-11eb-8c99-30ed70cd748e.png" width="300" height="300">
 
